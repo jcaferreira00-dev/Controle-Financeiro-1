@@ -1,0 +1,340 @@
+/* ==========================
+   GERAL
+========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#f2f5f8;
+    color:#333;
+    padding:20px;
+}
+
+#app{
+    max-width:1100px;
+    margin:auto;
+}
+
+/* ==========================
+   CABEÇALHO
+========================== */
+
+header{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+header h1{
+    color:#2e7d32;
+    margin-bottom:15px;
+}
+
+.saldo-card{
+    background:#2e7d32;
+    color:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 3px 10px rgba(0,0,0,.15);
+}
+
+.saldo-card h2{
+    font-size:18px;
+    margin-bottom:8px;
+}
+
+.saldo-card h1{
+    font-size:36px;
+}
+
+/* ==========================
+   CARDS
+========================== */
+
+.card{
+    background:white;
+    border-radius:12px;
+    padding:20px;
+    margin-bottom:20px;
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+.card h2{
+    color:#2e7d32;
+    margin-bottom:15px;
+}
+
+/* ==========================
+   INPUTS
+========================== */
+
+.linha{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:15px;
+}
+
+.linha input,
+.linha select{
+    flex:1;
+    min-width:150px;
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    font-size:15px;
+}
+
+.linha button{
+    padding:10px 18px;
+    background:#2e7d32;
+    color:white;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.linha button:hover{
+    background:#256628;
+}
+
+/* ==========================
+   DUAS COLUNAS
+========================== */
+
+.duas-colunas{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+
+/* ==========================
+   LISTAS
+========================== */
+
+ul{
+    list-style:none;
+}
+
+li{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:12px;
+    border-bottom:1px solid #eee;
+}
+
+.itemInfo{
+    flex:1;
+}
+
+.itemTitulo{
+    font-weight:bold;
+    margin-bottom:4px;
+}
+
+.itemValor{
+    color:#2e7d32;
+    font-size:15px;
+}
+
+/* ==========================
+   BOTÕES
+========================== */
+
+.itemBotoes{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+button{
+    cursor:pointer;
+}
+
+.btnPagar{
+    background:#1976d2;
+    color:white;
+    border:none;
+    padding:8px 12px;
+    border-radius:6px;
+}
+
+.btnPago{
+    background:#43a047;
+    color:white;
+    border:none;
+    padding:8px 12px;
+    border-radius:6px;
+}
+
+.btnExcluir{
+    background:#d32f2f;
+    color:white;
+    border:none;
+    padding:8px 12px;
+    border-radius:6px;
+}
+
+/* NOVO - CONTAS FIXAS */
+
+.btnFixa{
+    background:#ff9800;
+    color:white;
+    border:none;
+    padding:8px 10px;
+    min-width:42px;
+    border-radius:6px;
+    font-size:16px;
+}
+
+.btnNormal{
+    background:#9e9e9e;
+    color:white;
+    border:none;
+    padding:8px 10px;
+    min-width:42px;
+    border-radius:6px;
+    font-size:16px;
+}
+
+button:hover{
+    opacity:.9;
+}
+
+/* ==========================
+   RESUMO
+========================== */
+
+.resumo p{
+    display:flex;
+    justify-content:space-between;
+    padding:6px 0;
+}
+
+.saldoFinal{
+    font-weight:bold;
+    font-size:18px;
+    color:#2e7d32;
+}
+
+/* ==========================
+   FERRAMENTAS
+========================== */
+
+.botoes{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.botoes button{
+    flex:1;
+    min-width:180px;
+    padding:12px;
+    background:#2e7d32;
+    color:white;
+    border:none;
+    border-radius:8px;
+}
+
+/* ==========================
+   STATUS
+========================== */
+
+.pago{
+    background:#e8f5e9;
+}
+
+.naoPago{
+    background:white;
+}
+
+/* ==========================
+   HISTÓRICO
+========================== */
+
+#historico li{
+    background:#fafafa;
+    border-radius:8px;
+    margin-bottom:10px;
+    padding:12px;
+    white-space:pre-line;
+    border:1px solid #ddd;
+}
+
+/* ==========================
+   RESPONSIVO
+========================== */
+
+@media(max-width:800px){
+
+.duas-colunas{
+    grid-template-columns:1fr;
+}
+
+.itemBotoes{
+    margin-top:10px;
+}
+
+li{
+    flex-direction:column;
+    align-items:flex-start;
+}
+
+.itemBotoes{
+    width:100%;
+}
+
+.itemBotoes button{
+    flex:1;
+}
+
+}
+.btnFecharMes{
+
+    width:100%;
+
+    padding:16px;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#2e7d32;
+
+    color:white;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+.btnFecharMes:hover{
+
+    background:#1b5e20;
+
+}
+
+/* ==========================
+   SALDO NEGATIVO
+========================== */
+
+
+.saldoNegativo{
+    color:#ff5252 !important;
+}
+
+.saldoPositivo{
+    color:#ffffff;
+}
