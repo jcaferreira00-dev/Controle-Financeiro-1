@@ -238,16 +238,20 @@ const saldoResumo = document.getElementById("saldoResumo");
 saldoTela.innerText = moeda(saldo);
 saldoResumo.innerText = moeda(saldo);
 
+// ===========================
 // MUDA A COR DO SALDO
+// ===========================
+const saldoCard = document.querySelector(".saldo-card");
+
 if (saldo < 0) {
-    saldoTela.style.color = "#ff4d4d";
-    saldoResumo.style.color = "#d32f2f";
+  saldoCard.classList.remove("saldoPositivo");
+  saldoCard.classList.add("saldoNegativo");
 } else {
-    saldoTela.style.color = "";
-    saldoResumo.style.color = "";
+  saldoCard.classList.remove("saldoNegativo");
+  saldoCard.classList.add("saldoPositivo");
 }
 
-document.getElementById("resReceitas").innerText = moeda(totalReceitas);
+    document.getElementById("resReceitas").innerText = moeda(totalReceitas);
 document.getElementById("resVale").innerText = moeda(totalVale);
 document.getElementById("resPagamento").innerText = moeda(totalPagamento);
 
