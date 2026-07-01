@@ -23,38 +23,49 @@
   </header>
 
   <!-- MÊS + RECEITAS -->
-  <section class="card receitas">
-    <h2>Mês e Receitas</h2>
-    <div class="linha">
-      <select id="mesSelecionado" onchange="trocarMes()">
-        <option value="01">Janeiro</option>
-        <option value="02">Fevereiro</option>
-        <option value="03">Março</option>
-        <option value="04">Abril</option>
-        <option value="05">Maio</option>
-        <option value="06">Junho</option>
-        <option value="07">Julho</option>
-        <option value="08">Agosto</option>
-        <option value="09">Setembro</option>
-        <option value="10">Outubro</option>
-        <option value="11">Novembro</option>
-        <option value="12">Dezembro</option>
-      </select>
+<section class="card receitas">
+  <h2>Receitas do Mes</h2>
 
-      <select id="anoSelecionado" onchange="trocarMes()">
-        <option>2025</option>
-        <option selected>2026</option>
-        <option>2027</option>
-        <option>2028</option>
-      </select>
+  <!-- Linha do mês -->
+  <div class="linhaMes">
+    <select id="mesSelecionado" onchange="trocarMes()">
+      <option value="01">Janeiro</option>
+      <option value="02">Fevereiro</option>
+      <option value="03">Março</option>
+      <option value="04">Abril</option>
+      <option value="05">Maio</option>
+      <option value="06">Junho</option>
+      <option value="07">Julho</option>
+      <option value="08">Agosto</option>
+      <option value="09">Setembro</option>
+      <option value="10">Outubro</option>
+      <option value="11">Novembro</option>
+      <option value="12">Dezembro</option>
+    </select>
 
-      <input id="descricaoReceita" placeholder="Nova receita">
-      <input id="valorReceita" type="number" step="0.01" placeholder="Valor">
-      <!-- botão add + RECEITAS -->
-      <button class="btnAddReceita" onclick="adicionarReceita()">➕</button>
-    </div>
-    <ul id="listaReceitas"></ul>
-  </section>
+    <select id="anoSelecionado" onchange="trocarMes()">
+      <option>2025</option>
+      <option selected>2026</option>
+      <option>2027</option>
+      <option>2028</option>
+    </select>
+  </div>
+
+  <!-- Linha da receita -->
+  <div class="linha">
+    <input id="descricaoReceita" placeholder="Nova receita">
+
+    <input id="valorReceita"
+           type="number"
+           step="0.01"
+           placeholder="Valor">
+
+    <button class="btnAddReceita"
+            onclick="adicionarReceita()">➕</button>
+  </div>
+
+  <ul id="listaReceitas"></ul>
+</section>
 
   <!-- DESPESAS -->
   <section class="duas-colunas">
