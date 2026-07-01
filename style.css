@@ -19,6 +19,28 @@ body {
   margin: auto;
 }
 
+/* Linha do mês */
+.linhaMes{
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:10px;
+    margin-bottom:15px;
+}
+
+/* Campo da descrição ocupa o restante */
+#descricaoReceita{
+    flex:1;
+}
+
+/* Responsivo */
+@media(max-width:600px){
+
+    .linhaMes{
+        grid-template-columns:1fr 1fr;
+    }
+
+}
+
 /* ==========================
    CABEÇALHO
 ========================== */
@@ -77,7 +99,8 @@ header h1 {
 }
 
 .linha input,
-.linha select {
+.linha select,
+.linhaMes select {
   flex: 1;
   min-width: 120px;
   padding: 10px;
@@ -86,74 +109,23 @@ header h1 {
   font-size: 15px;
 }
 
-/* Botão ➕ compacto em Adicionar Receitas */
-.btnAddReceita {
-  background: none;
-  border: none;
-  font-size: 22px;
-  color: #2e7d32;
-  cursor: pointer;
-  padding: 0 8px;
+/* Padroniza o campo Valor da Receita */
+#valorReceita {
+    flex: 0 0 120px;
+    max-width: 120px;
 }
-.btnAddReceita:hover {
-  color: #1b5e20;
+/* Padroniza o campo Valor Vale*/
+#valorVale {
+    flex: 0 0 120px;
+    max-width: 120px;
 }
-
-/* Botão ➕ Despesas no Vale */
-.vale .btnAddVale {
-  background: none;
-  border: none;
-  font-size: 22px;
-  color: #1976d2;
-  cursor: pointer;
-  padding: 0 8px;
-}
-.vale .btnAddVale:hover {
-  color: #0d47a1;
+/* Padroniza o campo Valor Pagamento*/
+#valorPagamento {
+    flex: 0 0 120px;
+    max-width: 120px;
 }
 
-/* Botão ➕ Despesas no Pagamento */
-.pagamento .btnAddPagamento {
-  background: none;
-  border: none;
-  font-size: 22px;
-  color: #d32f2f;
-  cursor: pointer;
-  padding: 0 8px;
-}
 
-.pagamento .btnAddPagamento:hover {
-  color: #b71c1c;
-}
-/* ==========================
-   Botao FIXA la do Java
-========================== */
-.btnNormal,
-.btnFixa {
-  width: 34px;
-  height: 34px;
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 18px;
-  transition: .2s;
-}
-
-.btnNormal {
-  background: #eeeeee;
-}
-
-.btnNormal:hover {
-  background: #e0e0e0;
-}
-
-.btnFixa {
-  background: #ffd54f;
-}
-
-.btnFixa:hover {
-  background: #ffca28;
-}
 /* ==========================
    DUAS COLUNAS
 ========================== */
@@ -204,12 +176,82 @@ li {
 /* ==========================
    BOTÕES DE AÇÃO
 ========================== */
+
+.btnNormal,
+.btnFixa {
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 18px;
+  transition: .2s;
+}
+
+/* Botão ➕ Adicionar Receitas */
+.btnAddReceita {
+  background: none;
+  border: none;
+  font-size: 22px;
+  color: #2e7d32;
+  cursor: pointer;
+  padding: 0 8px;
+}
+
+
+/* Botão ➕ Despesas no Vale */
+.vale .btnAddVale {
+  background: none;
+  border: none;
+  font-size: 22px;
+  color: #1976d2;
+  cursor: pointer;
+  padding: 0 8px;
+}
+
+
+/* Botão ➕ Despesas no Pagamento */
+.pagamento .btnAddPagamento {
+  background: none;
+  border: none;
+  font-size: 22px;
+  color: #d32f2f;
+  cursor: pointer;
+  padding: 0 8px;
+}
+
+
+.btnNormal {
+  background: #eeeeee;
+}
+
+.btnNormal:hover {
+  background: #e0e0e0;
+}
+
+.btnFixa {
+  background: #ffd54f;
+}
+
+.btnFixa:hover {
+  background: #ffca28;
+}
+
 .btnPagar {
   background: #1976d2;
   color: white;
   border: none;
   padding: 6px 10px;
   border-radius: 6px;
+}
+
+.btnPago{
+    background:#43a047;
+    color:white;
+    border:none;
+    padding:6px 10px;
+    border-radius:6px;
+    cursor:pointer;
 }
 
 .btnEditar {
@@ -226,6 +268,99 @@ li {
   border: none;
   padding: 6px 10px;
   border-radius: 6px;
+}
+
+.btnAddReceita{
+    width:42px;
+    height:42px;
+
+    border:none;
+    border-radius:50%;
+
+    background:none;
+    color:#b5e9f0;
+
+    font-size:24px;
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.btnAddReceita:hover{
+    background:#86c9f5;
+    transform:scale(1.08);
+}
+
+.btnAddReceita:active{
+    transform:scale(.95);
+}
+
+.btnAddVale{
+    width:42px;
+    height:42px;
+
+    border:none;
+    border-radius:50%;
+
+    background:#b5e9f0;
+    color:#b5e9f0;
+
+    font-size:24px;
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.btnAddVale:hover{
+    background:#86c9f5;
+    transform:scale(1.08);
+}
+
+.btnAddVale:active{
+    transform:scale(.95);
+}
+
+.btnAddPagamento{
+    width:42px;
+    height:42px;
+
+    border:none;
+    border-radius:50%;
+
+    background:#b5e9f0;
+    color:#b5e9f0;
+
+    font-size:24px;
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.btnAddPagamento:hover{
+    background:#86c9f5;
+    transform:scale(1.08);
+}
+
+.btnAddPagamento:active{
+    transform:scale(.95);
 }
 
 /* ==========================
@@ -310,12 +445,18 @@ li {
     grid-template-columns: 1fr 1fr;
     gap: 10px;
   }
-  .receitas .linha input,
-  .receitas .linha button,
-  .receitas .linha select {
-    min-width: 0;
-    width: 100%;
-  }
+ .receitas .linha #descricaoReceita{
+    width:100%;
+}
+
+.receitas .linha #valorReceita{
+    width:120px;
+    max-width:120px;
+}
+
+.receitas .linha .btnAddReceita{
+    width:42px;
+} 
 }
 
 /* ==========================
