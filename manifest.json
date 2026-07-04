@@ -1,9 +1,24 @@
 {
-  "name": "Controle Financeiro",
-  "short_name": "Financeiro",
-  "start_url": "/"
+  "name": "Minhas Contas",
+  "short_name": "Minhas Contas",
+  "description": "Controle pessoal de receitas, vale e pagamento mensal.",
+  "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#2e7d32",
-  "icons": []
+  "background_color": "#1b3a29",
+  "theme_color": "#1b3a29",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
 }

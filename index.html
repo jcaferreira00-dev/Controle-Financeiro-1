@@ -3,133 +3,169 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ajuste Financeiro</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#1b3a29">
+
+  <!-- PWA / iPhone -->
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#2e7d32">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Minhas Contas">
+
+  <link rel="stylesheet" href="style.css">
+  <title>Minhas Contas</title>
 </head>
 
 <body>
 <div id="app">
 
-  <!-- CABEÇALHO -->
-  <header>
-    <h1>💰 Ajuste Financeiro</h1>
-    <div class="saldo-card saldoPositivo">
-      <h2>Saldo Atual</h2>
+  <!-- CABEÇALHO FIXO -->
+  <header id="topo">
+    <div class="saldo-card saldoPositivo" id="saldoCard">
+      <span class="saldoLabel">Saldo de <span id="labelMes">Julho</span></span>
       <h1 id="saldoAtual">R$ 0,00</h1>
+
+      <div class="seletorPeriodo">
+        <button class="setaMes" onclick="mesAnterior()" aria-label="Mês anterior">‹</button>
+
+        <div class="periodoTextos">
+          <select id="mesSelecionado" onchange="trocarMes()">
+            <option value="01">Janeiro</option>
+            <option value="02">Fevereiro</option>
+            <option value="03">Março</option>
+            <option value="04">Abril</option>
+            <option value="05">Maio</option>
+            <option value="06">Junho</option>
+            <option value="07">Julho</option>
+            <option value="08">Agosto</option>
+            <option value="09">Setembro</option>
+            <option value="10">Outubro</option>
+            <option value="11">Novembro</option>
+            <option value="12">Dezembro</option>
+          </select>
+
+          <select id="anoSelecionado" onchange="trocarMes()">
+            <option>2025</option>
+            <option selected>2026</option>
+            <option>2027</option>
+            <option>2028</option>
+          </select>
+        </div>
+
+        <button class="setaMes" onclick="proximoMes()" aria-label="Próximo mês">›</button>
+      </div>
     </div>
   </header>
 
-  <!-- MÊS + RECEITAS -->
-<section class="card receitas">
-  <h2>Receitas do Mes</h2>
+  <main>
 
-  <!-- Linha do mês -->
-  <div class="linhaMes">
-    <select id="mesSelecionado" onchange="trocarMes()">
-      <option value="01">Janeiro</option>
-      <option value="02">Fevereiro</option>
-      <option value="03">Março</option>
-      <option value="04">Abril</option>
-      <option value="05">Maio</option>
-      <option value="06">Junho</option>
-      <option value="07">Julho</option>
-      <option value="08">Agosto</option>
-      <option value="09">Setembro</option>
-      <option value="10">Outubro</option>
-      <option value="11">Novembro</option>
-      <option value="12">Dezembro</option>
-    </select>
-
-    <select id="anoSelecionado" onchange="trocarMes()">
-      <option>2025</option>
-      <option selected>2026</option>
-      <option>2027</option>
-      <option>2028</option>
-    </select>
-  </div>
-
-  <!-- Linha da receita -->
-  <div class="linha">
-    <input id="descricaoReceita" placeholder="Nova receita">
-
-    <input id="valorReceita"
-           type="number"
-           step="0.01"
-           placeholder="Valor">
-
-    <button class="btnAddReceita"
-            onclick="adicionarReceita()">➕</button>
-  </div>
-
-  <ul id="listaReceitas"></ul>
-</section>
-
-  <!-- DESPESAS -->
-  <section class="duas-colunas">
-
-    <div class="card vale despesas">
-      <h2>Despesas no Vale</h2>
-      <div class="linha">
-        <input id="descricaoVale" placeholder="Adicionar nova despesa">
-        <input id="valorVale" type="number" step="0.01" placeholder="Valor">
-        <button class="btnAddVale" onclick="adicionarVale()">➕</button>
+    <!-- RECEITAS -->
+    <section class="card receitas">
+      <div class="cardTitulo">
+        <h2>💰 Receitas</h2>
+        <span class="totalCard" id="resReceitas">R$ 0,00</span>
       </div>
+
+      <div class="linha">
+        <input id="descricaoReceita" placeholder="Ex: Salário" inputmode="text">
+        <input id="valorReceita" type="number" step="0.01" inputmode="decimal" placeholder="R$">
+        <button class="btnAdd btnAddReceita" onclick="adicionarReceita()" aria-label="Adicionar receita">+</button>
+      </div>
+
+      <ul id="listaReceitas"></ul>
+      <p class="listaVazia" id="vazioReceitas">Nenhuma receita neste mês.</p>
+    </section>
+
+    <!-- VALE -->
+    <section class="card vale despesas">
+      <div class="cardTitulo">
+        <h2>🎫 Vale</h2>
+        <span class="totalCard" id="resVale">R$ 0,00</span>
+      </div>
+
+      <div class="linha">
+        <input id="descricaoVale" placeholder="Ex: Mercado" inputmode="text">
+        <input id="valorVale" type="number" step="0.01" inputmode="decimal" placeholder="R$">
+        <button class="btnAdd btnAddVale" onclick="adicionarVale()" aria-label="Adicionar despesa no vale">+</button>
+      </div>
+
       <ul id="listaVale"></ul>
-    </div>
+      <p class="listaVazia" id="vazioVale">Nenhuma conta no vale este mês.</p>
+    </section>
 
-    <div class="card pagamento despesas">
-      <h2>Despesas no Pagamento</h2>
-      <div class="linha">
-        <input id="descricaoPagamento" placeholder="Adicionar nova despesa">
-        <input id="valorPagamento" type="number" step="0.01" placeholder="Valor">
-        <button class="btnAddPagamento" onclick="adicionarPagamento()">➕</button>
+    <!-- PAGAMENTO -->
+    <section class="card pagamento despesas">
+      <div class="cardTitulo">
+        <h2>🏦 Pagamento</h2>
+        <span class="totalCard" id="resPagamento">R$ 0,00</span>
       </div>
+
+      <div class="linha">
+        <input id="descricaoPagamento" placeholder="Ex: Aluguel" inputmode="text">
+        <input id="valorPagamento" type="number" step="0.01" inputmode="decimal" placeholder="R$">
+        <button class="btnAdd btnAddPagamento" onclick="adicionarPagamento()" aria-label="Adicionar despesa no pagamento">+</button>
+      </div>
+
       <ul id="listaPagamento"></ul>
-    </div>
+      <p class="listaVazia" id="vazioPagamento">Nenhuma conta no pagamento este mês.</p>
+    </section>
 
-  </section>
+    <!-- RESUMO -->
+    <section class="card resumo">
+      <h2>📊 Resumo do mês</h2>
 
-  <!-- RESUMO -->
-  <section class="card resumo">
-    <h2>Resumo</h2>
-    <p><span>Receitas</span><span id="resReceitas">R$ 0,00</span></p>
-    <p><span>Vale</span><span id="resVale">R$ 0,00</span></p>
-    <p><span>Pagamentos</span><span id="resPagamento">R$ 0,00</span></p>
-    <p class="saldoFinal"><span>Saldo</span><span id="saldoResumo">R$ 0,00</span></p>
-  </section>
+      <p><span><i class="dot dotReceita"></i>Receitas</span><span id="resumoReceitas">R$ 0,00</span></p>
+      <p><span><i class="dot dotVale"></i>Vale</span><span id="resumoVale">R$ 0,00</span></p>
+      <p><span><i class="dot dotPagamento"></i>Pagamentos</span><span id="resumoPagamento">R$ 0,00</span></p>
 
-  <!-- FECHAR MÊS -->
-  <section class="card">
-    <button class="btnFecharMes" onclick="fecharMes()">📅 Fechar Mês</button>
-  </section>
+      <div class="linhaDivisoria"></div>
 
-  <!-- HISTÓRICO -->
-  <section class="card">
-    <h2>Histórico dos Meses</h2>
-    <ul id="historico"></ul>
-  </section>
+      <p class="saldoFinal"><span>Saldo</span><span id="saldoResumo">R$ 0,00</span></p>
+    </section>
 
-  <!-- FERRAMENTAS -->
-  <section class="card">
-    <h2>Ferramentas</h2>
-    <div class="botoes">
-      <button class="btnBackup" onclick="exportarBackup()">💾 Backup</button>
-      <button class="btnRestaurar" onclick="importarBackup()">📂 Restaurar</button>
-      <button class="btnExcluirTudo" onclick="limparTudo()">🗑️ Limpar Tudo</button>
-    </div>
-  </section>
+    <!-- FECHAR MÊS -->
+    <section class="card fecharMesCard">
+      <button class="btnFecharMes" onclick="fecharMes()">Fechar mês e avançar ➜</button>
+      <p class="dicaFechar">Confere se deu pra pagar tudo e já prepara o próximo mês.</p>
+    </section>
+
+    <!-- HISTÓRICO -->
+    <section class="card">
+      <h2>🗂️ Histórico</h2>
+      <ul id="historico"></ul>
+      <p class="listaVazia" id="vazioHistorico">Nenhum mês fechado ainda.</p>
+    </section>
+
+    <!-- FERRAMENTAS -->
+    <section class="card">
+      <h2>⚙️ Ferramentas</h2>
+      <div class="botoes">
+        <button class="btnFerramenta btnBackup" onclick="exportarBackup()">
+          <span class="ferramentaIcone">💾</span>
+          <span class="ferramentaLabel">Backup</span>
+        </button>
+        <button class="btnFerramenta btnRestaurar" onclick="importarBackup()">
+          <span class="ferramentaIcone">📂</span>
+          <span class="ferramentaLabel">Restaurar</span>
+        </button>
+        <button class="btnFerramenta btnExcluirTudo" onclick="limparTudo()">
+          <span class="ferramentaIcone">🗑️</span>
+          <span class="ferramentaLabel">Limpar</span>
+        </button>
+      </div>
+    </section>
+
+  </main>
 
 </div>
 
-<input type="file" id="arquivoBackup" style="display:none">
+<input type="file" id="arquivoBackup" accept="application/json" style="display:none">
 
 <script src="script.js"></script>
 <script>
   if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("sw.js");
+    navigator.serviceWorker.register("sw.js").catch(() => {});
   }
 </script>
 
