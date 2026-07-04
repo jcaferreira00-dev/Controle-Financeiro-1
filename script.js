@@ -19,6 +19,118 @@ if (!banco) {
 
 function salvarBanco() {
     localStorage.setItem("financeiro", JSON.stringify(banco));
+
+    if (usuarioAtual) {
+        window.CloudSync.salvarNaNuvem(usuarioAtual.uid, banco)
+            .catch(err => console.error("Falha ao sincronizar:", err));
+    }
+}
+
+// ===========================
+// CONTA / SINCRONIZAÇÃO
+// ===========================
+
+let usuarioAtual = null;
+
+window.addEventListener("cloudsync-pronto", function () {
+
+    CloudSync.onAuthStateChanged(async function (user) {
+
+        if (user) {
+
+            usuarioAtual = user;
+
+            document.getElementById("telaLogin").style.display = "none";
+            document.getElementById("btnSair").style.display = "block";
+
+            try {
+                let dadosNuvem = await CloudSync.buscarDaNuvem(user.uid);
+
+                if (dadosNuvem) {
+                    banco = dadosNuvem;
+                } else {
+                    // Primeiro login: envia o que já existia neste aparelho
+                    await CloudSync.salvarNaNuvem(user.uid, banco);
+                }
+
+                localStorage.setItem("financeiro", JSON.stringify(banco));
+                atualizar();
+
+                CloudSync.ouvirMudancas(user.uid, function (dadosNovos) {
+                    banco = dadosNovos;
+                    localStorage.setItem("financeiro", JSON.stringify(banco));
+                    atualizar();
+                });
+
+            } catch (e) {
+                console.error("Erro ao sincronizar com a nuvem:", e);
+            }
+
+        } else {
+            usuarioAtual = null;
+            CloudSync.pararDeOuvir();
+            document.getElementById("telaLogin").style.display = "flex";
+            document.getElementById("btnSair").style.display = "none";
+        }
+    });
+});
+
+function traduzErroFirebase(codigo) {
+    const mapa = {
+        "auth/invalid-email": "E-mail inválido.",
+        "auth/missing-password": "Digite uma senha.",
+        "auth/user-not-found": "Conta não encontrada. Toque em \"Criar conta nova\".",
+        "auth/wrong-password": "Senha incorreta.",
+        "auth/invalid-credential": "E-mail ou senha incorretos.",
+        "auth/email-already-in-use": "Esse e-mail já tem uma conta. Toque em \"Entrar\".",
+        "auth/weak-password": "A senha precisa ter pelo menos 6 caracteres.",
+        "auth/network-request-failed": "Sem conexão com a internet."
+    };
+    return mapa[codigo] || "Não foi possível concluir. Tente novamente.";
+}
+
+function fazerLogin() {
+    let email = document.getElementById("loginEmail").value.trim();
+    let senha = document.getElementById("loginSenha").value;
+    let erro = document.getElementById("loginErro");
+
+    erro.innerText = "";
+
+    if (!email || !senha) {
+        erro.innerText = "Preencha e-mail e senha.";
+        return;
+    }
+
+    CloudSync.login(email, senha).catch(function (e) {
+        erro.innerText = traduzErroFirebase(e.code);
+    });
+}
+
+function fazerCadastro() {
+    let email = document.getElementById("loginEmail").value.trim();
+    let senha = document.getElementById("loginSenha").value;
+    let erro = document.getElementById("loginErro");
+
+    erro.innerText = "";
+
+    if (!email || !senha) {
+        erro.innerText = "Preencha e-mail e senha.";
+        return;
+    }
+
+    if (senha.length < 6) {
+        erro.innerText = "A senha precisa ter pelo menos 6 caracteres.";
+        return;
+    }
+
+    CloudSync.cadastrar(email, senha).catch(function (e) {
+        erro.innerText = traduzErroFirebase(e.code);
+    });
+}
+
+function sair() {
+    if (!confirm("Sair da conta neste aparelho?")) return;
+    CloudSync.logout();
 }
 
 // ===========================

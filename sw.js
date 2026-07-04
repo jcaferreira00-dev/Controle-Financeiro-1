@@ -1,9 +1,10 @@
-const CACHE_NAME = "minhas-contas-v1";
+const CACHE_NAME = "minhas-contas-v2";
 
 const ARQUIVOS = [
   "./index.html",
   "./style.css",
   "./script.js",
+  "./firebase-sync.js",
   "./manifest.json",
   "./icon-192.png",
   "./icon-512.png"

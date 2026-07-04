@@ -18,6 +18,23 @@
 </head>
 
 <body>
+
+<!-- TELA DE LOGIN -->
+<div id="telaLogin" class="telaLogin">
+  <div class="loginCard">
+    <h1>💰 Minhas Contas</h1>
+    <p class="loginTexto">Entre com sua conta para sincronizar seus dados entre o celular e o computador.</p>
+
+    <input id="loginEmail" type="email" placeholder="E-mail" autocomplete="username" inputmode="email">
+    <input id="loginSenha" type="password" placeholder="Senha (mín. 6 caracteres)" autocomplete="current-password">
+
+    <button class="btnLoginPrimario" onclick="fazerLogin()">Entrar</button>
+    <button class="btnLoginSecundario" onclick="fazerCadastro()">Criar conta nova</button>
+
+    <p class="loginErro" id="loginErro"></p>
+  </div>
+</div>
+
 <div id="app">
 
   <!-- CABEÇALHO FIXO -->
@@ -154,6 +171,8 @@
           <span class="ferramentaLabel">Limpar</span>
         </button>
       </div>
+
+      <button class="btnSair" id="btnSair" onclick="sair()">🚪 Sair da conta</button>
     </section>
 
   </main>
@@ -162,6 +181,7 @@
 
 <input type="file" id="arquivoBackup" accept="application/json" style="display:none">
 
+<script type="module" src="firebase-sync.js"></script>
 <script src="script.js"></script>
 <script>
   if ("serviceWorker" in navigator) {
