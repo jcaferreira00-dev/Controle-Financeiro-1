@@ -93,24 +93,7 @@
       <ul id="listaReceitas"></ul>
       <p class="listaVazia" id="vazioReceitas">Nenhuma receita neste mês.</p>
     </section>
-
-    <!-- VALE -->
-    <section class="card vale despesas">
-      <div class="cardTitulo">
-        <h2>🎫 Despesas no Vale</h2>
-        <span class="totalCard" id="resVale">R$ 0,00</span>
-      </div>
-
-      <div class="linha">
-        <input id="descricaoVale" placeholder="Ex: Mercado" inputmode="text">
-        <input id="valorVale" type="number" step="0.01" inputmode="decimal" placeholder="R$">
-        <button class="btnAdd btnAddVale" onclick="adicionarVale()" aria-label="Adicionar despesa no vale">+</button>
-      </div>
-
-      <ul id="listaVale"></ul>
-      <p class="listaVazia" id="vazioVale">Nenhuma conta no vale este mês.</p>
-    </section>
-
+   
     <!-- PAGAMENTO -->
     <section class="card pagamento despesas">
       <div class="cardTitulo">
@@ -126,6 +109,22 @@
 
       <ul id="listaPagamento"></ul>
       <p class="listaVazia" id="vazioPagamento">Nenhuma conta no pagamento este mês.</p>
+    </section>
+    <!-- VALE -->
+    <section class="card vale despesas">
+      <div class="cardTitulo">
+        <h2>🎫 Despesas no Vale</h2>
+        <span class="totalCard" id="resVale">R$ 0,00</span>
+      </div>
+
+      <div class="linha">
+        <input id="descricaoVale" placeholder="Ex: Mercado" inputmode="text">
+        <input id="valorVale" type="number" step="0.01" inputmode="decimal" placeholder="R$">
+        <button class="btnAdd btnAddVale" onclick="adicionarVale()" aria-label="Adicionar despesa no vale">+</button>
+      </div>
+
+      <ul id="listaVale"></ul>
+      <p class="listaVazia" id="vazioVale">Nenhuma conta no vale este mês.</p>
     </section>
 
     <!-- RESUMO -->
