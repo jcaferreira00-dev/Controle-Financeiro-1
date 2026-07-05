@@ -64,9 +64,7 @@ header {
   position: relative;
   padding: calc(14px + env(safe-area-inset-top)) 16px 18px;
   background: linear-gradient(160deg, var(--verde-musgo) 0%, var(--verde-musgo-escuro) 100%);
-  border: 2px solid var(--amarelo-copa); /* borda amarela */
-  border-radius: var(--raio);            /* arredondamento */
-}
+  }
 
 .saldo-card {
   max-width: 448px;
