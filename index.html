@@ -6,6 +6,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#1b3a29">
 
+  <!-- Aplica o tema salvo antes de renderizar, pra não "piscar" -->
+  <script>
+    (function () {
+      var pref = localStorage.getItem("tema") || "auto";
+      var escuro = pref === "escuro" ||
+        (pref === "auto" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+      document.documentElement.setAttribute("data-tema", escuro ? "escuro" : "claro");
+    })();
+  </script>
+
   <!-- PWA / iPhone -->
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="icon-192.png">
@@ -35,10 +45,29 @@
   </div>
 </div>
 
+<!-- PAINEL DE CONFIGURAÇÕES -->
+<div id="painelConfig" class="painelConfig" style="display:none;">
+  <div class="configCard">
+    <div class="configTopo">
+      <h2>⚙️ Configurações</h2>
+      <button class="btnFecharConfig" onclick="fecharConfig()" aria-label="Fechar">✕</button>
+    </div>
+
+    <p class="configLabel">Tema</p>
+    <div class="temaOpcoes">
+      <button class="btnTema" data-valor="auto" onclick="definirTema('auto')">🌓 Automático (segue o sistema)</button>
+      <button class="btnTema" data-valor="claro" onclick="definirTema('claro')">☀️ Claro</button>
+      <button class="btnTema" data-valor="escuro" onclick="definirTema('escuro')">🌙 Escuro</button>
+    </div>
+  </div>
+</div>
+
 <div id="app">
 
   <!-- CABEÇALHO FIXO -->
   <header id="topo">
+    <button class="btnConfig" onclick="abrirConfig()" aria-label="Configurações">⚙️</button>
+
     <div class="saldo-card saldoPositivo" id="saldoCard">
       <span class="saldoLabel">Saldo de <span id="labelMes">Julho</span></span>
       <h1 id="saldoAtual">R$ 0,00</h1>
@@ -82,6 +111,7 @@
       <div class="cardTitulo">
         <h2>💰 Receitas</h2>
         <span class="totalCard" id="resReceitas">R$ 0,00</span>
+        <button class="btnRecolher" id="btnRecolher_receitas" onclick="toggleSecao('receitas')" aria-label="Recolher receitas">⌄</button>
       </div>
 
       <div class="linha">
@@ -93,28 +123,13 @@
       <ul id="listaReceitas"></ul>
       <p class="listaVazia" id="vazioReceitas">Nenhuma receita neste mês.</p>
     </section>
-   
-    <!-- PAGAMENTO -->
-    <section class="card pagamento despesas">
-      <div class="cardTitulo">
-        <h2>🏦 Despesas no Pagamento</h2>
-        <span class="totalCard" id="resPagamento">R$ 0,00</span>
-      </div>
 
-      <div class="linha">
-        <input id="descricaoPagamento" placeholder="Ex: Aluguel" inputmode="text">
-        <input id="valorPagamento" type="number" step="0.01" inputmode="decimal" placeholder="R$">
-        <button class="btnAdd btnAddPagamento" onclick="adicionarPagamento()" aria-label="Adicionar despesa no pagamento">+</button>
-      </div>
-
-      <ul id="listaPagamento"></ul>
-      <p class="listaVazia" id="vazioPagamento">Nenhuma conta no pagamento este mês.</p>
-    </section>
     <!-- VALE -->
     <section class="card vale despesas">
       <div class="cardTitulo">
-        <h2>🎫 Despesas no Vale</h2>
+        <h2>🎫 Vale</h2>
         <span class="totalCard" id="resVale">R$ 0,00</span>
+        <button class="btnRecolher" id="btnRecolher_vale" onclick="toggleSecao('vale')" aria-label="Recolher vale">⌄</button>
       </div>
 
       <div class="linha">
@@ -127,13 +142,31 @@
       <p class="listaVazia" id="vazioVale">Nenhuma conta no vale este mês.</p>
     </section>
 
+    <!-- PAGAMENTO -->
+    <section class="card pagamento despesas">
+      <div class="cardTitulo">
+        <h2>🏦 Pagamento</h2>
+        <span class="totalCard" id="resPagamento">R$ 0,00</span>
+        <button class="btnRecolher" id="btnRecolher_pagamento" onclick="toggleSecao('pagamento')" aria-label="Recolher pagamento">⌄</button>
+      </div>
+
+      <div class="linha">
+        <input id="descricaoPagamento" placeholder="Ex: Aluguel" inputmode="text">
+        <input id="valorPagamento" type="number" step="0.01" inputmode="decimal" placeholder="R$">
+        <button class="btnAdd btnAddPagamento" onclick="adicionarPagamento()" aria-label="Adicionar despesa no pagamento">+</button>
+      </div>
+
+      <ul id="listaPagamento"></ul>
+      <p class="listaVazia" id="vazioPagamento">Nenhuma conta no pagamento este mês.</p>
+    </section>
+
     <!-- RESUMO -->
     <section class="card resumo">
       <h2>📊 Resumo do mês</h2>
 
       <p><span><i class="dot dotReceita"></i>Receitas</span><span id="resumoReceitas">R$ 0,00</span></p>
-      <p><span><i class="dot dotVale"></i>Despesas no vale</span><span id="resumoVale">R$ 0,00</span></p>
-      <p><span><i class="dot dotPagamento"></i>Despesas no pagamento</span><span id="resumoPagamento">R$ 0,00</span></p>
+      <p><span><i class="dot dotVale"></i>Vale</span><span id="resumoVale">R$ 0,00</span></p>
+      <p><span><i class="dot dotPagamento"></i>Pagamentos</span><span id="resumoPagamento">R$ 0,00</span></p>
 
       <div class="linhaDivisoria"></div>
 
@@ -147,14 +180,14 @@
     </section>
 
     <!-- HISTÓRICO -->
-    <section class="card">
+    <section class="card historicoSection">
       <h2>🗂️ Histórico</h2>
       <ul id="historico"></ul>
       <p class="listaVazia" id="vazioHistorico">Nenhum mês fechado ainda.</p>
     </section>
 
     <!-- FERRAMENTAS -->
-    <section class="card">
+    <section class="card ferramentasSection">
       <h2>⚙️ Ferramentas</h2>
       <div class="botoes">
         <button class="btnFerramenta btnBackup" onclick="exportarBackup()">

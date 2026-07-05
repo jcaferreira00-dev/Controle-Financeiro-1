@@ -803,3 +803,83 @@ function limparTudo() {
 
     alert("Todos os dados foram apagados com sucesso.");
 }
+
+// =====================================================
+// TEMA (claro / escuro / automático)
+// =====================================================
+
+function calcularTemaEfetivo() {
+    let pref = localStorage.getItem("tema") || "auto";
+
+    if (pref === "auto") {
+        return window.matchMedia("(prefers-color-scheme: dark)").matches ? "escuro" : "claro";
+    }
+
+    return pref;
+}
+
+function aplicarTema() {
+    document.documentElement.setAttribute("data-tema", calcularTemaEfetivo());
+}
+
+function atualizarBotoesTema() {
+    let pref = localStorage.getItem("tema") || "auto";
+
+    document.querySelectorAll(".btnTema").forEach(function (btn) {
+        btn.classList.toggle("ativo", btn.dataset.valor === pref);
+    });
+}
+
+function definirTema(valor) {
+    localStorage.setItem("tema", valor);
+    aplicarTema();
+    atualizarBotoesTema();
+}
+
+function abrirConfig() {
+    atualizarBotoesTema();
+    document.getElementById("painelConfig").style.display = "flex";
+}
+
+function fecharConfig() {
+    document.getElementById("painelConfig").style.display = "none";
+}
+
+// Se estiver no modo "automático", acompanha mudança do sistema em tempo real
+if (window.matchMedia) {
+    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function () {
+        if ((localStorage.getItem("tema") || "auto") === "auto") {
+            aplicarTema();
+        }
+    });
+}
+
+// =====================================================
+// RECOLHER SEÇÕES (Receitas / Vale / Pagamento)
+// =====================================================
+
+const SECOES_RECOLHIVEIS = ["receitas", "vale", "pagamento"];
+
+function aplicarEstadoSecoes() {
+    let estados = JSON.parse(localStorage.getItem("secoesRecolhidas") || "{}");
+
+    SECOES_RECOLHIVEIS.forEach(function (sec) {
+        let card = document.querySelector("." + sec);
+        if (!card) return;
+
+        if (estados[sec]) {
+            card.classList.add("recolhido");
+        } else {
+            card.classList.remove("recolhido");
+        }
+    });
+}
+
+function toggleSecao(sec) {
+    let estados = JSON.parse(localStorage.getItem("secoesRecolhidas") || "{}");
+    estados[sec] = !estados[sec];
+    localStorage.setItem("secoesRecolhidas", JSON.stringify(estados));
+    aplicarEstadoSecoes();
+}
+
+aplicarEstadoSecoes();

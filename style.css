@@ -60,6 +60,7 @@ main {
    CABEÇALHO / SALDO
 ===================================================== */
 header {
+  position: relative;
   padding: calc(14px + env(safe-area-inset-top)) 16px 18px;
   background: linear-gradient(160deg, var(--verde-musgo) 0%, var(--verde-musgo-escuro) 100%);
 }
@@ -165,9 +166,13 @@ header {
 .cardTitulo {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   margin-bottom: 14px;
   gap: 10px;
+}
+
+.cardTitulo h2 {
+  flex: 1;
 }
 
 .card > h2 {
@@ -688,4 +693,239 @@ li.pago {
   .linha {
     grid-template-columns: 1fr 80px 40px;
   }
+}
+
+/* =====================================================
+   MODO ESCURO
+   Ativado por data-tema="escuro" no <html>, definido via
+   JS (script.js) — automático por padrão, ou manual pelo
+   painel de configurações.
+===================================================== */
+html[data-tema="escuro"] {
+
+  --verde-menta: #5fc789;
+  --azul-petroleo: #3f96b3;
+  --ocre: #d9a53a;
+  --vermelho-terra: #d17a79;
+
+  --fundo: #12151a;
+  --card: #1c2128;
+  --texto: #edf1f0;
+  --texto-suave: #97a1ab;
+  --borda: #2c333c;
+
+  --sombra: 0 4px 14px rgba(0, 0, 0, .35);
+  --sombra-botao: 0 3px 8px rgba(0, 0, 0, .45);
+}
+
+html[data-tema="escuro"] .linha input,
+html[data-tema="escuro"] .loginCard input {
+  background: #232932;
+  color: var(--texto);
+}
+
+html[data-tema="escuro"] .linha input:focus,
+html[data-tema="escuro"] .loginCard input:focus {
+  background: #272e38;
+}
+
+html[data-tema="escuro"] .btnNormal,
+html[data-tema="escuro"] .btnFixa,
+html[data-tema="escuro"] .btnExcluir,
+html[data-tema="escuro"] .btnPagar,
+html[data-tema="escuro"] .btnPago {
+  background: var(--card);
+}
+
+html[data-tema="escuro"] #historico li,
+html[data-tema="escuro"] .btnFerramenta {
+  background: #232932;
+}
+
+html[data-tema="escuro"] .btnFerramenta:active {
+  background: #2c333c;
+}
+
+html[data-tema="escuro"] .loginCard,
+html[data-tema="escuro"] .btnLoginSecundario {
+  background: var(--card);
+  color: var(--texto);
+}
+
+html[data-tema="escuro"] .saldoFinal span:last-child,
+html[data-tema="escuro"] .historicoSaldo strong {
+  color: var(--verde-menta);
+}
+
+/* =====================================================
+   RESPONSIVO — TELAS GRANDES (tablet/computador)
+===================================================== */
+@media (min-width: 860px) {
+
+  #app {
+    max-width: 1100px;
+  }
+
+  main {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas:
+      "receitas vale pagamento"
+      "resumo   resumo   fechar"
+      "historico historico historico"
+      "ferramentas ferramentas ferramentas";
+    gap: 18px;
+  }
+
+  .receitas       { grid-area: receitas; }
+  .vale           { grid-area: vale; }
+  .pagamento      { grid-area: pagamento; }
+  .resumo         { grid-area: resumo; }
+  .fecharMesCard  { grid-area: fechar; display: flex; flex-direction: column; justify-content: center; }
+  .historicoSection   { grid-area: historico; }
+  .ferramentasSection { grid-area: ferramentas; }
+
+  .botoes {
+    max-width: 420px;
+  }
+}
+
+/* =====================================================
+   BOTÃO DE CONFIGURAÇÕES (cabeçalho)
+===================================================== */
+.btnConfig {
+  position: absolute;
+  top: calc(14px + env(safe-area-inset-top));
+  right: 16px;
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255,255,255,.14);
+  color: #fff;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.btnConfig:active {
+  background: rgba(255,255,255,.25);
+  transform: scale(.93);
+}
+
+/* =====================================================
+   PAINEL DE CONFIGURAÇÕES
+===================================================== */
+.painelConfig {
+  position: fixed;
+  inset: 0;
+  z-index: 950;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(0,0,0,.45);
+}
+
+.configCard {
+  width: 100%;
+  max-width: 360px;
+  background: var(--card);
+  border-radius: var(--raio);
+  padding: 22px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.3);
+}
+
+.configTopo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.configTopo h2 {
+  font-size: 17px;
+  color: var(--texto);
+}
+
+.btnFecharConfig {
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 50%;
+  background: var(--borda);
+  color: var(--texto);
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.configLabel {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--texto-suave);
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  margin-bottom: 10px;
+}
+
+.temaOpcoes {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.btnTema {
+  width: 100%;
+  text-align: left;
+  padding: 13px 14px;
+  border: 1.5px solid var(--borda);
+  border-radius: var(--raio-pequeno);
+  background: transparent;
+  color: var(--texto);
+  font-size: 14.5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btnTema.ativo {
+  border-color: var(--verde-menta);
+  background: rgba(79, 157, 105, .1);
+}
+
+/* =====================================================
+   RECOLHER SEÇÕES (Receitas / Vale / Pagamento)
+===================================================== */
+.btnRecolher {
+  width: 26px;
+  height: 26px;
+  border: none;
+  border-radius: 50%;
+  background: var(--borda);
+  color: var(--texto-suave);
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform .2s;
+}
+
+.card.recolhido .btnRecolher {
+  transform: rotate(-90deg);
+}
+
+.card.recolhido .linha,
+.card.recolhido ul,
+.card.recolhido .listaVazia {
+  display: none;
+}
+
+.card.recolhido .cardTitulo {
+  margin-bottom: 0;
 }
