@@ -1,5 +1,5 @@
 /* =====================================================
-   TOKEN
+   TOKENS
 ===================================================== */
 :root {
   --verde-musgo: #234d35;
@@ -72,7 +72,7 @@ header {
   color: #fff;
   text-align: center;
  /* Novo estilo */
-  outline: 2px solid var(--amarelo-copa); /* borda externa */
+  border: 1.5px solid rgba(255, 205, 30, .4); /* igual ao fecharMesCard */
   border-radius: var(--raio-pequeno);     /* cantos arredondados */
   padding: 12px;   
 }
