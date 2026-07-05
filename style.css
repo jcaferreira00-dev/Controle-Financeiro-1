@@ -64,6 +64,8 @@ header {
   position: relative;
   padding: calc(14px + env(safe-area-inset-top)) 16px 18px;
   background: linear-gradient(160deg, var(--verde-musgo) 0%, var(--verde-musgo-escuro) 100%);
+  border: 2px solid var(--amarelo-copa); /* borda amarela */
+  border-radius: var(--raio);            /* arredondamento */
 }
 
 .saldo-card {
@@ -71,10 +73,7 @@ header {
   margin: 0 auto;
   color: #fff;
   text-align: center;
- /* Novo estilo */
-  border: 1.5px solid rgba(255, 205, 30, .4); /* igual ao fecharMesCard */
-  border-radius: var(--raio-pequeno);     /* cantos arredondados */
-  padding: 12px;   
+  
 }
 
 .saldoLabel {
