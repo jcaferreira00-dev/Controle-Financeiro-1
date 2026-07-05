@@ -162,7 +162,10 @@
 
     <!-- RESUMO -->
     <section class="card resumo">
-      <h2>📊 Resumo do mês</h2>
+      <div class="cardTitulo">
+        <h2>📊 Resumo do mês</h2>
+        <button class="btnRecolher" id="btnRecolher_resumo" onclick="toggleSecao('resumo')" aria-label="Recolher resumo">🔽</button>
+      </div>
 
       <p><span><i class="dot dotReceita"></i>Receitas</span><span id="resumoReceitas">R$ 0,00</span></p>
       <p><span><i class="dot dotVale"></i>Vale</span><span id="resumoVale">R$ 0,00</span></p>

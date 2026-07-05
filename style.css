@@ -8,6 +8,7 @@
   --azul-petroleo: #2b6777;
   --ocre: #b8860b;
   --vermelho-terra: #9b3a3a;
+  --amarelo-copa: #ffcd1e;
   --fundo: #f5f3ee;
   --card: #ffffff;
   --texto: #22281f;
@@ -382,6 +383,7 @@ li.pago {
 ===================================================== */
 .fecharMesCard {
   text-align: center;
+  border: 1.5px solid rgba(255, 205, 30, .4);
 }
 
 .btnFecharMes {
@@ -389,11 +391,12 @@ li.pago {
   padding: 16px;
   font-size: 16px;
   font-weight: 700;
-  border: none;
+  border: 2.5px solid var(--amarelo-copa);
   border-radius: var(--raio-pequeno);
   background: var(--verde-musgo);
   color: #fff;
   cursor: pointer;
+  box-shadow: 0 4px 14px rgba(255, 205, 30, .22);
   transition: .15s;
 }
 
@@ -549,8 +552,27 @@ li.pago {
 }
 
 .ferramentaIcone {
-  font-size: 19px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
   line-height: 1;
+  background: rgba(107, 114, 128, .1);
+}
+
+.btnBackup .ferramentaIcone {
+  background: rgba(43, 103, 119, .12);
+}
+
+.btnRestaurar .ferramentaIcone {
+  background: rgba(184, 134, 11, .12);
+}
+
+.btnExcluirTudo .ferramentaIcone {
+  background: rgba(155, 58, 58, .12);
 }
 
 .ferramentaLabel {
@@ -918,9 +940,7 @@ html[data-tema="escuro"] .historicoSaldo strong {
   transform: scale(.88);
 }
 
-.card.recolhido .linha,
-.card.recolhido ul,
-.card.recolhido .listaVazia {
+.card.recolhido > *:not(.cardTitulo) {
   display: none;
 }
 

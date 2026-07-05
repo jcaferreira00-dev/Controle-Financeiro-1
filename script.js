@@ -858,7 +858,7 @@ if (window.matchMedia) {
 // RECOLHER SEÇÕES (Receitas / Vale / Pagamento)
 // =====================================================
 
-const SECOES_RECOLHIVEIS = ["receitas", "vale", "pagamento"];
+const SECOES_RECOLHIVEIS = ["receitas", "vale", "pagamento", "resumo"];
 
 function aplicarEstadoSecoes() {
     let estados = JSON.parse(localStorage.getItem("secoesRecolhidas") || "{}");
