@@ -792,7 +792,7 @@ html[data-tema="escuro"] .historicoSaldo strong {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-areas:
-      "receitas vale pagamento"
+      "receitas pagamento vale"
       "resumo   resumo   fechar"
       "historico historico historico"
       "ferramentas ferramentas ferramentas";
