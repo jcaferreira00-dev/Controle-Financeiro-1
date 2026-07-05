@@ -865,12 +865,15 @@ function aplicarEstadoSecoes() {
 
     SECOES_RECOLHIVEIS.forEach(function (sec) {
         let card = document.querySelector("." + sec);
+        let btn = document.getElementById("btnRecolher_" + sec);
         if (!card) return;
 
         if (estados[sec]) {
             card.classList.add("recolhido");
+            if (btn) btn.textContent = "▶️";
         } else {
             card.classList.remove("recolhido");
+            if (btn) btn.textContent = "🔽";
         }
     });
 }

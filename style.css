@@ -901,23 +901,21 @@ html[data-tema="escuro"] .historicoSaldo strong {
    RECOLHER SEÇÕES (Receitas / Vale / Pagamento)
 ===================================================== */
 .btnRecolher {
-  width: 26px;
-  height: 26px;
+  width: 30px;
+  height: 30px;
   border: none;
-  border-radius: 50%;
-  background: var(--borda);
+  background: none;
   color: var(--texto-suave);
-  font-size: 13px;
+  font-size: 15px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  transition: transform .2s;
 }
 
-.card.recolhido .btnRecolher {
-  transform: rotate(-90deg);
+.btnRecolher:active {
+  transform: scale(.88);
 }
 
 .card.recolhido .linha,
