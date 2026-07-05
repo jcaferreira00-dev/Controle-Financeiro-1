@@ -72,7 +72,7 @@ header {
   color: #fff;
   text-align: center;
  /* Novo estilo */
-  border: 2px solid var(--amarelo-copa); /* borda amarela */
+  outline: 2px solid var(--amarelo-copa); /* borda externa */
   border-radius: var(--raio-pequeno);     /* cantos arredondados */
   padding: 12px;   
 }
