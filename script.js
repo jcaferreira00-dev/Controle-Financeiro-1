@@ -655,6 +655,8 @@ function fecharMes() {
 
     let saldo = totalReceitas - totalVale - totalPagamento;
 
+    if (!confirmarFechamento(saldo)) return;
+
     banco.historico.unshift({
         mes: mesAtual,
         ano: anoAtual,
@@ -886,3 +888,31 @@ function toggleSecao(sec) {
 }
 
 aplicarEstadoSecoes();
+
+// =====================================================
+// CONFIRMAÇÃO AO FECHAR O MÊS (evita toque sem querer)
+// =====================================================
+
+const MENSAGENS_SALDO_POSITIVO = [
+    "Sobrou {saldo}! Bora pensar em investir isso, mesmo que pouco — Tesouro Selic ou CDB já ajudam a não deixar parado.",
+    "{saldo} de sobra. Antes de gastar por impulso: já pensou em guardar uma parte pra reserva de emergência?",
+    "Mês fechou no azul, {saldo} sobrando. Que tal separar uma fatia pra investir e deixar o \"eu do futuro\" feliz?",
+    "Parabéns, sobrou {saldo}! Dinheiro parado na conta é dinheiro perdendo valor — dá uma olhada em opções de investimento.",
+    "{saldo} de saldo positivo. Você resistiu ao mês inteiro, agora resista ao impulso de torrar tudo — invista uma parte!"
+];
+
+const MENSAGENS_SALDO_NEGATIVO = [
+    "Faltou {saldo} esse mês. Vale revisar os gastos no Vale e no Pagamento pra achar onde apertar.",
+    "Ficou {saldo} no vermelho. Antes de fechar, que tal dar uma espiada se tem gasto supérfluo escondido na lista?",
+    "{saldo} faltando. Não é o fim do mundo, mas é um bom sinal pra repensar alguns gastos no próximo mês.",
+    "O mês fechou devendo {saldo}. Hora de olhar com carinho pra cada conta e ver o que dá pra cortar ou adiar.",
+    "Faltaram {saldo}. Respira, acontece — mas já aproveita e revisa os gastos fixos antes de avançar pro próximo mês."
+];
+
+function confirmarFechamento(saldo) {
+    let lista = saldo >= 0 ? MENSAGENS_SALDO_POSITIVO : MENSAGENS_SALDO_NEGATIVO;
+    let modelo = lista[Math.floor(Math.random() * lista.length)];
+    let mensagem = modelo.replace("{saldo}", moeda(Math.abs(saldo)));
+
+    return confirm(mensagem + "\n\nFechar o mês e avançar pro próximo?");
+}
