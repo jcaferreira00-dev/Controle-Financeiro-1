@@ -1,4 +1,4 @@
-const CACHE_NAME = "minhas-contas-v6";
+const CACHE_NAME = "minhas-contas-v7";
 
 const ARQUIVOS = [
   "./index.html",
