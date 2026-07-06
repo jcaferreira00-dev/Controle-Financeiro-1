@@ -163,7 +163,11 @@ window.onload = function () {
     if (ano) ano.value = anoAtual;
 
     let btnOlho = document.getElementById("btnOlho");
-    if (btnOlho) btnOlho.textContent = ocultarValores ? "🙈" : "👁️";
+    if (btnOlho) {
+    btnOlho.textContent = ocultarValores
+        ? "visibility_off"
+        : "visibility";
+}
 
     atualizar();
 };
@@ -275,7 +279,11 @@ function toggleValores() {
     localStorage.setItem("ocultarValores", ocultarValores ? "1" : "0");
 
     let btn = document.getElementById("btnOlho");
-    if (btn) btn.textContent = ocultarValores ? "🙈" : "👁️";
+    if (btn) {
+    btn.textContent = ocultarValores
+        ? "visibility_off"
+        : "visibility";
+}
 
     atualizar();
 }
