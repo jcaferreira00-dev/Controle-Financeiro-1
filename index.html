@@ -1,4 +1,3 @@
-<!--Joao Carlos Antunes Ferreira-->
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -16,6 +15,11 @@
       document.documentElement.setAttribute("data-tema", escuro ? "escuro" : "claro");
     })();
   </script>
+
+  <!-- Favicon (aba do navegador / favoritos) -->
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
 
   <!-- PWA / iPhone -->
   <link rel="manifest" href="manifest.json">
@@ -60,6 +64,25 @@
       <button class="btnTema" data-valor="claro" onclick="definirTema('claro')">☀️ Claro</button>
       <button class="btnTema" data-valor="escuro" onclick="definirTema('escuro')">🌙 Escuro</button>
     </div>
+
+    <p class="configLabel configLabelEspacada">Dados</p>
+    <div class="botoes">
+      <button class="btnFerramenta btnBackup" onclick="exportarBackup()">
+        <span class="ferramentaIcone">💾</span>
+        <span class="ferramentaLabel">Backup</span>
+      </button>
+      <button class="btnFerramenta btnRestaurar" onclick="importarBackup()">
+        <span class="ferramentaIcone">📂</span>
+        <span class="ferramentaLabel">Restaurar</span>
+      </button>
+      <button class="btnFerramenta btnExcluirTudo" onclick="limparTudo()">
+        <span class="ferramentaIcone">🗑️</span>
+        <span class="ferramentaLabel">Limpar</span>
+      </button>
+    </div>
+
+    <p class="configLabel configLabelEspacada">Conta</p>
+    <button class="btnSair" id="btnSair" onclick="sair()">🚪 Sair da conta</button>
   </div>
 </div>
 
@@ -67,7 +90,10 @@
 
   <!-- CABEÇALHO FIXO -->
   <header id="topo">
-    <button class="btnConfig" onclick="abrirConfig()" aria-label="Configurações">⚙️</button>
+    <div class="acoesTopo">
+      <button class="btnOlho" id="btnOlho" onclick="toggleValores()" aria-label="Mostrar ou esconder valores">👁️</button>
+      <button class="btnConfig" onclick="abrirConfig()" aria-label="Configurações">⚙️</button>
+    </div>
 
     <div class="saldo-card saldoPositivo" id="saldoCard">
       <span class="saldoLabel">Saldo de <span id="labelMes">Julho</span></span>
@@ -108,7 +134,7 @@
   <main>
 
     <!-- RECEITAS -->
-    <section class="card receitas">
+    <section class="card receitas" data-secao="receitas">
       <div class="cardTitulo">
         <h2>💰 Receitas</h2>
         <span class="totalCard" id="resReceitas">R$ 0,00</span>
@@ -124,27 +150,9 @@
       <ul id="listaReceitas"></ul>
       <p class="listaVazia" id="vazioReceitas">Nenhuma receita neste mês.</p>
     </section>
-    
-    <!-- PAGAMENTO -->
-    <section class="card pagamento despesas">
-      <div class="cardTitulo">
-        <h2>🏦 Pagamento</h2>
-        <span class="totalCard" id="resPagamento">R$ 0,00</span>
-        <button class="btnRecolher" id="btnRecolher_pagamento" onclick="toggleSecao('pagamento')" aria-label="Recolher pagamento">🔽</button>
-      </div>
-
-      <div class="linha">
-        <input id="descricaoPagamento" placeholder="Ex: Aluguel" inputmode="text">
-        <input id="valorPagamento" type="number" step="0.01" inputmode="decimal" placeholder="R$">
-        <button class="btnAdd btnAddPagamento" onclick="adicionarPagamento()" aria-label="Adicionar despesa no pagamento">+</button>
-      </div>
-
-      <ul id="listaPagamento"></ul>
-      <p class="listaVazia" id="vazioPagamento">Nenhuma conta no pagamento este mês.</p>
-    </section>
 
     <!-- VALE -->
-    <section class="card vale despesas">
+    <section class="card vale despesas" data-secao="vale">
       <div class="cardTitulo">
         <h2>🎫 Vale</h2>
         <span class="totalCard" id="resVale">R$ 0,00</span>
@@ -161,8 +169,26 @@
       <p class="listaVazia" id="vazioVale">Nenhuma conta no vale este mês.</p>
     </section>
 
+    <!-- PAGAMENTO -->
+    <section class="card pagamento despesas" data-secao="pagamento">
+      <div class="cardTitulo">
+        <h2>🏦 Pagamento</h2>
+        <span class="totalCard" id="resPagamento">R$ 0,00</span>
+        <button class="btnRecolher" id="btnRecolher_pagamento" onclick="toggleSecao('pagamento')" aria-label="Recolher pagamento">🔽</button>
+      </div>
+
+      <div class="linha">
+        <input id="descricaoPagamento" placeholder="Ex: Aluguel" inputmode="text">
+        <input id="valorPagamento" type="number" step="0.01" inputmode="decimal" placeholder="R$">
+        <button class="btnAdd btnAddPagamento" onclick="adicionarPagamento()" aria-label="Adicionar despesa no pagamento">+</button>
+      </div>
+
+      <ul id="listaPagamento"></ul>
+      <p class="listaVazia" id="vazioPagamento">Nenhuma conta no pagamento este mês.</p>
+    </section>
+
     <!-- RESUMO -->
-    <section class="card resumo">
+    <section class="card resumo" data-secao="resumo">
       <div class="cardTitulo">
         <h2>📊 Resumo do mês</h2>
         <button class="btnRecolher" id="btnRecolher_resumo" onclick="toggleSecao('resumo')" aria-label="Recolher resumo">🔽</button>
@@ -170,7 +196,7 @@
 
       <p><span><i class="dot dotReceita"></i>Receitas</span><span id="resumoReceitas">R$ 0,00</span></p>
       <p><span><i class="dot dotVale"></i>Vale</span><span id="resumoVale">R$ 0,00</span></p>
-      <p><span><i class="dot dotPagamento"></i>Pagamento</span><span id="resumoPagamento">R$ 0,00</span></p>
+      <p><span><i class="dot dotPagamento"></i>Pagamentos</span><span id="resumoPagamento">R$ 0,00</span></p>
 
       <div class="linhaDivisoria"></div>
 
@@ -184,31 +210,20 @@
     </section>
 
     <!-- HISTÓRICO -->
-    <section class="card historicoSection">
-      <h2>🗂️ Histórico</h2>
+    <section class="card historicoSection" data-secao="historico">
+      <div class="cardTitulo">
+        <h2>🗂️ Histórico</h2>
+        <button class="btnRecolher" id="btnRecolher_historico" onclick="toggleSecao('historico')" aria-label="Recolher histórico">🔽</button>
+      </div>
+
       <ul id="historico"></ul>
       <p class="listaVazia" id="vazioHistorico">Nenhum mês fechado ainda.</p>
     </section>
 
-    <!-- FERRAMENTAS -->
+    <!-- FERRAMENTAS (reservado pra futura implementação) -->
     <section class="card ferramentasSection">
       <h2>⚙️ Ferramentas</h2>
-      <div class="botoes">
-        <button class="btnFerramenta btnBackup" onclick="exportarBackup()">
-          <span class="ferramentaIcone">💾</span>
-          <span class="ferramentaLabel">Backup</span>
-        </button>
-        <button class="btnFerramenta btnRestaurar" onclick="importarBackup()">
-          <span class="ferramentaIcone">📂</span>
-          <span class="ferramentaLabel">Restaurar</span>
-        </button>
-        <button class="btnFerramenta btnExcluirTudo" onclick="limparTudo()">
-          <span class="ferramentaIcone">🗑️</span>
-          <span class="ferramentaLabel">Limpar</span>
-        </button>
-      </div>
-
-      <button class="btnSair" id="btnSair" onclick="sair()">🚪 Sair da conta</button>
+      <p class="placeholderFerramentas">Em breve, novidades por aqui 🚧</p>
     </section>
 
   </main>

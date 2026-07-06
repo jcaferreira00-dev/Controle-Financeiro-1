@@ -162,6 +162,9 @@ window.onload = function () {
     if (mes) mes.value = mesAtual;
     if (ano) ano.value = anoAtual;
 
+    let btnOlho = document.getElementById("btnOlho");
+    if (btnOlho) btnOlho.textContent = ocultarValores ? "🙈" : "👁️";
+
     atualizar();
 };
 
@@ -252,6 +255,29 @@ function moeda(v) {
         style: "currency",
         currency: "BRL"
     });
+}
+
+// ===========================
+// OCULTAR VALORES (olhinho)
+// ===========================
+
+let ocultarValores = localStorage.getItem("ocultarValores") === "1";
+
+function valorExibicao(v) {
+    if (ocultarValores) {
+        return v < 0 ? "-R$ ••••" : "R$ ••••";
+    }
+    return moeda(v);
+}
+
+function toggleValores() {
+    ocultarValores = !ocultarValores;
+    localStorage.setItem("ocultarValores", ocultarValores ? "1" : "0");
+
+    let btn = document.getElementById("btnOlho");
+    if (btn) btn.textContent = ocultarValores ? "🙈" : "👁️";
+
+    atualizar();
 }
 
 // =====================================================
@@ -365,8 +391,8 @@ function atualizar() {
 
     // Cabeçalho
     document.getElementById("labelMes").innerText = NOMES_MES[Number(mesAtual) - 1];
-    document.getElementById("saldoAtual").innerText = moeda(saldo);
-    document.getElementById("saldoResumo").innerText = moeda(saldo);
+    document.getElementById("saldoAtual").innerText = valorExibicao(saldo);
+    document.getElementById("saldoResumo").innerText = valorExibicao(saldo);
 
     const saldoCard = document.getElementById("saldoCard");
     if (saldo < 0) {
@@ -378,14 +404,14 @@ function atualizar() {
     }
 
     // Totais nos cards
-    document.getElementById("resReceitas").innerText = moeda(totalReceitas);
-    document.getElementById("resVale").innerText = moeda(totalVale);
-    document.getElementById("resPagamento").innerText = moeda(totalPagamento);
+    document.getElementById("resReceitas").innerText = valorExibicao(totalReceitas);
+    document.getElementById("resVale").innerText = valorExibicao(totalVale);
+    document.getElementById("resPagamento").innerText = valorExibicao(totalPagamento);
 
     // Totais no resumo
-    document.getElementById("resumoReceitas").innerText = moeda(totalReceitas);
-    document.getElementById("resumoVale").innerText = moeda(totalVale);
-    document.getElementById("resumoPagamento").innerText = moeda(totalPagamento);
+    document.getElementById("resumoReceitas").innerText = valorExibicao(totalReceitas);
+    document.getElementById("resumoVale").innerText = valorExibicao(totalVale);
+    document.getElementById("resumoPagamento").innerText = valorExibicao(totalPagamento);
 
     renderReceitas(receitas);
     renderVale(vales);
@@ -414,7 +440,7 @@ function renderReceitas(lista) {
 <li>
   <div class="itemInfo">
     <div class="itemTitulo">${item.descricao}</div>
-    <div class="itemValor">${moeda(item.valor)}</div>
+    <div class="itemValor">${valorExibicao(item.valor)}</div>
   </div>
   <div class="itemBotoes">
     <button class="btnExcluir" title="Excluir" onclick="removerReceita(${item.id})">❌</button>
@@ -439,7 +465,7 @@ function renderVale(lista) {
 <li class="${item.pago ? "pago" : "naoPago"}">
   <div class="itemInfo">
     <div class="itemTitulo">${item.descricao}</div>
-    <div class="itemValor">${moeda(item.valor)}</div>
+    <div class="itemValor">${valorExibicao(item.valor)}</div>
   </div>
   <div class="itemBotoes">
     <button class="${item.pago ? "btnPago" : "btnPagar"}"
@@ -448,6 +474,7 @@ function renderVale(lista) {
     <button class="${item.fixa ? "btnFixa" : "btnNormal"}"
       title="${item.fixa ? "Conta fixa" : "Marcar como fixa"}"
       onclick="toggleFixaVale(${item.id})">${item.fixa ? "📌" : "📍"}</button>
+    <button class="btnEditar" title="Editar" onclick="editarVale(${item.id})">✏️</button>
     <button class="btnExcluir" title="Excluir" onclick="removerVale(${item.id})">❌</button>
   </div>
 </li>`;
@@ -470,7 +497,7 @@ function renderPagamento(lista) {
 <li class="${item.pago ? "pago" : "naoPago"}">
   <div class="itemInfo">
     <div class="itemTitulo">${item.descricao}</div>
-    <div class="itemValor">${moeda(item.valor)}</div>
+    <div class="itemValor">${valorExibicao(item.valor)}</div>
   </div>
   <div class="itemBotoes">
     <button class="${item.pago ? "btnPago" : "btnPagar"}"
@@ -479,6 +506,7 @@ function renderPagamento(lista) {
     <button class="${item.fixa ? "btnFixa" : "btnNormal"}"
       title="${item.fixa ? "Conta fixa" : "Marcar como fixa"}"
       onclick="toggleFixaPagamento(${item.id})">${item.fixa ? "📌" : "📍"}</button>
+    <button class="btnEditar" title="Editar" onclick="editarPagamento(${item.id})">✏️</button>
     <button class="btnExcluir" title="Excluir" onclick="removerPagamento(${item.id})">❌</button>
   </div>
 </li>`;
@@ -499,6 +527,52 @@ function removerReceita(id) {
     atualizar();
 }
 
+// =====================================================
+// EDITAR
+// =====================================================
+
+function editarVale(id) {
+    let item = banco.vale.find(v => v.id == id);
+    if (!item) return;
+
+    let novaDescricao = prompt("Descrição:", item.descricao);
+    if (novaDescricao === null) return;
+    novaDescricao = novaDescricao.trim();
+    if (!novaDescricao) return;
+
+    let novoValorTexto = prompt("Valor:", item.valor);
+    if (novoValorTexto === null) return;
+    let novoValor = parseFloat(novoValorTexto.replace(",", "."));
+    if (isNaN(novoValor)) return;
+
+    item.descricao = novaDescricao;
+    item.valor = novoValor;
+
+    salvarBanco();
+    atualizar();
+}
+
+function editarPagamento(id) {
+    let item = banco.pagamento.find(p => p.id == id);
+    if (!item) return;
+
+    let novaDescricao = prompt("Descrição:", item.descricao);
+    if (novaDescricao === null) return;
+    novaDescricao = novaDescricao.trim();
+    if (!novaDescricao) return;
+
+    let novoValorTexto = prompt("Valor:", item.valor);
+    if (novoValorTexto === null) return;
+    let novoValor = parseFloat(novoValorTexto.replace(",", "."));
+    if (isNaN(novoValor)) return;
+
+    item.descricao = novaDescricao;
+    item.valor = novoValor;
+
+    salvarBanco();
+    atualizar();
+}
+
 function removerVale(id) {
     if (!confirm("Excluir este vale?")) return;
     banco.vale = banco.vale.filter(v => v.id != id);
@@ -509,6 +583,52 @@ function removerVale(id) {
 function removerPagamento(id) {
     if (!confirm("Excluir este pagamento?")) return;
     banco.pagamento = banco.pagamento.filter(p => p.id != id);
+    salvarBanco();
+    atualizar();
+}
+
+// =====================================================
+// EDITAR
+// =====================================================
+
+function editarVale(id) {
+    let item = banco.vale.find(v => v.id == id);
+    if (!item) return;
+
+    let novaDescricao = prompt("Descrição:", item.descricao);
+    if (novaDescricao === null) return;
+    novaDescricao = novaDescricao.trim();
+    if (!novaDescricao) return;
+
+    let novoValorTexto = prompt("Valor:", item.valor);
+    if (novoValorTexto === null) return;
+    let novoValor = parseFloat(novoValorTexto.replace(",", "."));
+    if (isNaN(novoValor)) return;
+
+    item.descricao = novaDescricao;
+    item.valor = novoValor;
+
+    salvarBanco();
+    atualizar();
+}
+
+function editarPagamento(id) {
+    let item = banco.pagamento.find(p => p.id == id);
+    if (!item) return;
+
+    let novaDescricao = prompt("Descrição:", item.descricao);
+    if (novaDescricao === null) return;
+    novaDescricao = novaDescricao.trim();
+    if (!novaDescricao) return;
+
+    let novoValorTexto = prompt("Valor:", item.valor);
+    if (novoValorTexto === null) return;
+    let novoValor = parseFloat(novoValorTexto.replace(",", "."));
+    if (isNaN(novoValor)) return;
+
+    item.descricao = novaDescricao;
+    item.valor = novoValor;
+
     salvarBanco();
     atualizar();
 }
@@ -614,23 +734,23 @@ function renderHistorico() {
 
   <div class="grafico">
     <div class="barraColuna">
-      <span class="barraValorV">${moeda(h.receitas)}</span>
+      <span class="barraValorV">${valorExibicao(h.receitas)}</span>
       <div class="barraTrilhoV"><div class="barraPreenchidaV barraReceita" style="height:${altReceitas}px"></div></div>
       <span class="barraLabelV">Receitas</span>
     </div>
     <div class="barraColuna">
-      <span class="barraValorV">${moeda(h.vale)}</span>
+      <span class="barraValorV">${valorExibicao(h.vale)}</span>
       <div class="barraTrilhoV"><div class="barraPreenchidaV barraVale" style="height:${altVale}px"></div></div>
       <span class="barraLabelV">Vale</span>
     </div>
     <div class="barraColuna">
-      <span class="barraValorV">${moeda(h.pagamento)}</span>
+      <span class="barraValorV">${valorExibicao(h.pagamento)}</span>
       <div class="barraTrilhoV"><div class="barraPreenchidaV barraPagamento" style="height:${altPagamento}px"></div></div>
       <span class="barraLabelV">Pagamento</span>
     </div>
   </div>
 
-  <div class="historicoSaldo">Saldo do mês: <strong>${moeda(h.saldo)}</strong></div>
+  <div class="historicoSaldo">Saldo do mês: <strong>${valorExibicao(h.saldo)}</strong></div>
 </li>`;
     });
 
@@ -860,13 +980,13 @@ if (window.matchMedia) {
 // RECOLHER SEÇÕES (Receitas / Vale / Pagamento)
 // =====================================================
 
-const SECOES_RECOLHIVEIS = ["receitas", "vale", "pagamento", "resumo"];
+const SECOES_RECOLHIVEIS = ["receitas", "vale", "pagamento", "resumo", "historico"];
 
 function aplicarEstadoSecoes() {
     let estados = JSON.parse(localStorage.getItem("secoesRecolhidas") || "{}");
 
     SECOES_RECOLHIVEIS.forEach(function (sec) {
-        let card = document.querySelector("." + sec);
+        let card = document.querySelector('[data-secao="' + sec + '"]');
         let btn = document.getElementById("btnRecolher_" + sec);
         if (!card) return;
 
@@ -912,7 +1032,7 @@ const MENSAGENS_SALDO_NEGATIVO = [
 function confirmarFechamento(saldo) {
     let lista = saldo >= 0 ? MENSAGENS_SALDO_POSITIVO : MENSAGENS_SALDO_NEGATIVO;
     let modelo = lista[Math.floor(Math.random() * lista.length)];
-    let mensagem = modelo.replace("{saldo}", moeda(Math.abs(saldo)));
+    let mensagem = modelo.replace("{saldo}", valorExibicao(Math.abs(saldo)));
 
     return confirm(mensagem + "\n\nFechar o mês e avançar pro próximo?");
 }

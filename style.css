@@ -64,16 +64,13 @@ header {
   position: relative;
   padding: calc(14px + env(safe-area-inset-top)) 16px 18px;
   background: linear-gradient(160deg, var(--verde-musgo) 0%, var(--verde-musgo-escuro) 100%);
-  border: 2px solid var(--amarelo-copa); /* borda amarela */
-  border-radius: var(--raio);            /* arredondamento */
-  }
+}
 
 .saldo-card {
   max-width: 448px;
   margin: 0 auto;
   color: #fff;
   text-align: center;
-  
 }
 
 .saldoLabel {
@@ -305,6 +302,7 @@ li:last-child {
 .btnNormal,
 .btnFixa,
 .btnExcluir,
+.btnEditar,
 .btnPagar,
 .btnPago {
   width: 34px;
@@ -325,6 +323,7 @@ li:last-child {
 .btnNormal:active,
 .btnFixa:active,
 .btnExcluir:active,
+.btnEditar:active,
 .btnPagar:active,
 .btnPago:active {
   transform: scale(.9);
@@ -757,6 +756,7 @@ html[data-tema="escuro"] .loginCard input:focus {
 html[data-tema="escuro"] .btnNormal,
 html[data-tema="escuro"] .btnFixa,
 html[data-tema="escuro"] .btnExcluir,
+html[data-tema="escuro"] .btnEditar,
 html[data-tema="escuro"] .btnPagar,
 html[data-tema="escuro"] .btnPago {
   background: var(--card);
@@ -795,7 +795,7 @@ html[data-tema="escuro"] .historicoSaldo strong {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-areas:
-      "receitas pagamento vale"
+      "receitas vale pagamento"
       "resumo   resumo   fechar"
       "historico historico historico"
       "ferramentas ferramentas ferramentas";
@@ -816,25 +816,32 @@ html[data-tema="escuro"] .historicoSaldo strong {
 }
 
 /* =====================================================
-   BOTÃO DE CONFIGURAÇÕES (cabeçalho)
+   BOTÕES DO CABEÇALHO (olho + configurações)
 ===================================================== */
-.btnConfig {
+.acoesTopo {
   position: absolute;
   top: calc(14px + env(safe-area-inset-top));
   right: 16px;
+  display: flex;
+  gap: 8px;
+}
+
+.btnOlho,
+.btnConfig {
   width: 34px;
   height: 34px;
   border: none;
   border-radius: 50%;
   background: rgba(255,255,255,.14);
   color: #fff;
-  font-size: 16px;
+  font-size: 15px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
 }
 
+.btnOlho:active,
 .btnConfig:active {
   background: rgba(255,255,255,.25);
   transform: scale(.93);
@@ -896,6 +903,24 @@ html[data-tema="escuro"] .historicoSaldo strong {
   text-transform: uppercase;
   letter-spacing: .04em;
   margin-bottom: 10px;
+}
+
+.configLabelEspacada {
+  margin-top: 22px;
+}
+
+.painelConfig .botoes {
+  margin-bottom: 4px;
+}
+
+/* =====================================================
+   FERRAMENTAS (espaço reservado)
+===================================================== */
+.placeholderFerramentas {
+  text-align: center;
+  font-size: 13.5px;
+  color: var(--texto-suave);
+  padding: 18px 0 6px;
 }
 
 .temaOpcoes {

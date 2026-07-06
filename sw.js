@@ -7,7 +7,10 @@ const ARQUIVOS = [
   "./firebase-sync.js",
   "./manifest.json",
   "./icon-192.png",
-  "./icon-512.png"
+  "./icon-512.png",
+  "./favicon.ico",
+  "./favicon-32.png",
+  "./favicon-16.png"
 ];
 
 self.addEventListener("install", (event) => {
