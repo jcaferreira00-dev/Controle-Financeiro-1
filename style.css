@@ -33,7 +33,7 @@
 
 html, body {
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", Roboto, Helvetica, Arial, sans-serif;
-  background: var(--fundo);
+  background: linear-gradient(160deg, var(--verde) 0%, var(--verde-escuro) 100%);
   color: var(--texto);
 }
 
