@@ -63,7 +63,7 @@ main {
 header {
   position: relative;
   padding: calc(14px + env(safe-area-inset-top)) 16px 18px;
-  background: linear-gradient(160deg, var(--verde) 0%, var(--verde-escuro) 100%);
+  background: linear-gradient(160deg, var(--verde-musgo) 0%, var(--verde-musgo-escuro) 100%);
 }
 
 .saldo-card {
