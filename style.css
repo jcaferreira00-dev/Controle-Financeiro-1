@@ -600,44 +600,16 @@ li.pago {
 }
 
 /* =====================================================
-   TELA DE LOGIN
+   LOGIN (dentro de Configurações → Conta)
 ===================================================== */
-.telaLogin {
-  position: fixed;
-  inset: 0;
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-  padding-top: calc(24px + env(safe-area-inset-top));
-  padding-bottom: calc(24px + env(safe-area-inset-bottom));
-  background: linear-gradient(160deg, var(--verde-musgo) 0%, var(--verde-musgo-escuro) 100%);
-}
-
-.loginCard {
-  width: 100%;
-  max-width: 360px;
-  background: #fff;
-  border-radius: var(--raio);
-  padding: 28px 22px;
-  box-shadow: 0 10px 30px rgba(0,0,0,.25);
-  text-align: center;
-}
-
-.loginCard h1 {
-  font-size: 22px;
-  margin-bottom: 8px;
-}
-
-.loginTexto {
-  font-size: 13.5px;
+.contaInfo {
+  font-size: 13px;
   color: var(--texto-suave);
-  margin-bottom: 20px;
+  margin-bottom: 12px;
   line-height: 1.4;
 }
 
-.loginCard input {
+#loginCampos input {
   width: 100%;
   padding: 13px 14px;
   border: 1.5px solid var(--borda);
@@ -647,7 +619,7 @@ li.pago {
   background: #fafaf8;
 }
 
-.loginCard input:focus {
+#loginCampos input:focus {
   outline: none;
   border-color: var(--verde-menta);
   background: #fff;
@@ -743,13 +715,13 @@ html[data-tema="escuro"] {
 }
 
 html[data-tema="escuro"] .linha input,
-html[data-tema="escuro"] .loginCard input {
+html[data-tema="escuro"] #loginCampos input {
   background: #232932;
   color: var(--texto);
 }
 
 html[data-tema="escuro"] .linha input:focus,
-html[data-tema="escuro"] .loginCard input:focus {
+html[data-tema="escuro"] #loginCampos input:focus {
   background: #272e38;
 }
 
@@ -771,7 +743,6 @@ html[data-tema="escuro"] .btnFerramenta:active {
   background: #2c333c;
 }
 
-html[data-tema="escuro"] .loginCard,
 html[data-tema="escuro"] .btnLoginSecundario {
   background: var(--card);
   color: var(--texto);
@@ -828,13 +799,13 @@ html[data-tema="escuro"] .historicoSaldo strong {
 
 .btnOlho,
 .btnConfig {
-  width: 30px;
-  height: 30px;
+  width: 34px;
+  height: 34px;
   border: none;
   border-radius: 50%;
   background: rgba(255,255,255,.14);
   color: #fff;
-  font-size: 16px;
+  font-size: 15px;
   display: flex;
   align-items: center;
   justify-content: center;

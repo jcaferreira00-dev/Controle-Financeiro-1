@@ -35,21 +35,6 @@
 
 <body>
 
-<!-- TELA DE LOGIN -->
-<div id="telaLogin" class="telaLogin">
-  <div class="loginCard">
-    <h1>💰 Minhas Contas</h1>
-    <p class="loginTexto">Entre com sua conta para sincronizar seus dados entre o celular e o computador.</p>
-
-    <input id="loginEmail" type="email" placeholder="E-mail" autocomplete="username" inputmode="email">
-    <input id="loginSenha" type="password" placeholder="Senha (mín. 6 caracteres)" autocomplete="current-password">
-
-    <button class="btnLoginPrimario" onclick="fazerLogin()">Entrar</button>
-    <button class="btnLoginSecundario" onclick="fazerCadastro()">Criar conta nova</button>
-
-    <p class="loginErro" id="loginErro"></p>
-  </div>
-</div>
 
 <!-- PAINEL DE CONFIGURAÇÕES -->
 <div id="painelConfig" class="painelConfig" style="display:none;">
@@ -82,8 +67,18 @@
       </button>
     </div>
 
-    <p class="configLabel configLabelEspacada">Conta</p>
-    <button class="btnSair" id="btnSair" onclick="sair()">🚪 Sair da conta</button>
+    <p class="configLabel configLabelEspacada">Conta e sincronização</p>
+    <p class="contaInfo" id="contaInfo">Não conectado — seus dados ficam só neste dispositivo.</p>
+
+    <div id="loginCampos">
+      <input id="loginEmail" type="email" placeholder="E-mail" autocomplete="username" inputmode="email">
+      <input id="loginSenha" type="password" placeholder="Senha (mín. 6 caracteres)" autocomplete="current-password">
+      <button class="btnLoginPrimario" onclick="fazerLogin()">Entrar</button>
+      <button class="btnLoginSecundario" onclick="fazerCadastro()">Criar conta nova</button>
+      <p class="loginErro" id="loginErro"></p>
+    </div>
+
+    <button class="btnSair" id="btnSair" onclick="sair()" style="display:none;">🚪 Sair da conta</button>
   </div>
 </div>
 
@@ -95,7 +90,7 @@
       <button class="btnOlho material-symbols-outlined" id="btnOlho" onclick="toggleValores()" aria-label="Mostrar ou esconder valores">
   visibility
 </button> 
-      <button class="btnConfig" onclick="abrirConfig()" aria-label=>⚙️</button>
+      <button class="btnConfig" onclick="abrirConfig()" aria-label="Configurações">⚙️</button>
     </div>
 
     <div class="saldo-card saldoPositivo" id="saldoCard">
@@ -225,7 +220,7 @@
 
     <!-- FERRAMENTAS (reservado pra futura implementação) -->
     <section class="card ferramentasSection">
-      <h2> 💲 Holerite</h2>
+      <h2>Holerite</h2>
       <p class="placeholderFerramentas">Em breve, novidades por aqui 🚧</p>
     </section>
 

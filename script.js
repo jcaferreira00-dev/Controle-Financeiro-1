@@ -39,9 +39,7 @@ window.addEventListener("cloudsync-pronto", function () {
         if (user) {
 
             usuarioAtual = user;
-
-            document.getElementById("telaLogin").style.display = "none";
-            document.getElementById("btnSair").style.display = "block";
+            atualizarUIConta();
 
             try {
                 let dadosNuvem = await CloudSync.buscarDaNuvem(user.uid);
@@ -69,11 +67,27 @@ window.addEventListener("cloudsync-pronto", function () {
         } else {
             usuarioAtual = null;
             CloudSync.pararDeOuvir();
-            document.getElementById("telaLogin").style.display = "flex";
-            document.getElementById("btnSair").style.display = "none";
+            atualizarUIConta();
         }
     });
 });
+
+function atualizarUIConta() {
+    const info = document.getElementById("contaInfo");
+    const campos = document.getElementById("loginCampos");
+    const btnSair = document.getElementById("btnSair");
+    if (!info || !campos || !btnSair) return;
+
+    if (usuarioAtual) {
+        info.textContent = "Conectado como " + usuarioAtual.email;
+        campos.style.display = "none";
+        btnSair.style.display = "block";
+    } else {
+        info.textContent = "Não conectado — seus dados ficam só neste dispositivo.";
+        campos.style.display = "block";
+        btnSair.style.display = "none";
+    }
+}
 
 function traduzErroFirebase(codigo) {
     const mapa = {
