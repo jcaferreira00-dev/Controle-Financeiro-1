@@ -828,13 +828,13 @@ html[data-tema="escuro"] .historicoSaldo strong {
 
 .btnOlho,
 .btnConfig {
-  width: 24px;
-  height: 24px;
+  width: 30px;
+  height: 30px;
   border: none;
   border-radius: 50%;
   background: rgba(255,255,255,.14);
   color: #fff;
-  font-size: 15px;
+  font-size: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
