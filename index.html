@@ -149,25 +149,7 @@
       <p class="listaVazia" id="vazioReceitas">Nenhuma receita neste mês.</p>
     </section>
 
-    <!-- VALE -->
-    <section class="card vale despesas" data-secao="vale">
-      <div class="cardTitulo">
-        <h2>🎫 Vale</h2>
-        <span class="totalCard" id="resVale">R$ 0,00</span>
-        <button class="btnRecolher" id="btnRecolher_vale" onclick="toggleSecao('vale')" aria-label="Recolher vale">🔽</button>
-      </div>
-
-      <div class="linha">
-        <input id="descricaoVale" placeholder="Ex: Mercado" inputmode="text">
-        <input id="valorVale" type="number" step="0.01" inputmode="decimal" placeholder="R$">
-        <button class="btnAdd btnAddVale" onclick="adicionarVale()" aria-label="Adicionar despesa no vale">+</button>
-      </div>
-
-      <ul id="listaVale"></ul>
-      <p class="listaVazia" id="vazioVale">Nenhuma conta no vale este mês.</p>
-    </section>
-
-    <!-- PAGAMENTO -->
+       <!-- PAGAMENTO -->
     <section class="card pagamento despesas" data-secao="pagamento">
       <div class="cardTitulo">
         <h2>🏦 Pagamento</h2>
@@ -183,6 +165,23 @@
 
       <ul id="listaPagamento"></ul>
       <p class="listaVazia" id="vazioPagamento">Nenhuma conta no pagamento este mês.</p>
+    </section>
+     <!-- VALE -->
+    <section class="card vale despesas" data-secao="vale">
+      <div class="cardTitulo">
+        <h2>🎫 Vale</h2>
+        <span class="totalCard" id="resVale">R$ 0,00</span>
+        <button class="btnRecolher" id="btnRecolher_vale" onclick="toggleSecao('vale')" aria-label="Recolher vale">🔽</button>
+      </div>
+
+      <div class="linha">
+        <input id="descricaoVale" placeholder="Ex: Mercado" inputmode="text">
+        <input id="valorVale" type="number" step="0.01" inputmode="decimal" placeholder="R$">
+        <button class="btnAdd btnAddVale" onclick="adicionarVale()" aria-label="Adicionar despesa no vale">+</button>
+      </div>
+
+      <ul id="listaVale"></ul>
+      <p class="listaVazia" id="vazioVale">Nenhuma conta no vale este mês.</p>
     </section>
 
     <!-- RESUMO -->
