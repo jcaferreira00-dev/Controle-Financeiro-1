@@ -803,7 +803,7 @@ html[data-tema="escuro"] .historicoSaldo strong {
   height: 30px;
   border: none;
   border-radius: 50%;
-  background: rgba(255,255,255,.100);
+  background: rgba(255,255,255,.14);
   color: #fff;
   font-size: 15px;
   display: flex;
