@@ -40,45 +40,32 @@
 <div id="painelConfig" class="painelConfig" style="display:none;">
   <div class="configCard">
     <div class="configTopo">
-      <h2>⚙️ Configurações</h2>
-      <button class="btnFecharConfig" onclick="fecharConfig()" aria-label="Fechar">✕</button>
+      <h2><span class="material-symbols-outlined">settings</span>Configurações</h2>
+      <button class="btnFecharConfig material-symbols-outlined" onclick="fecharConfig()" aria-label="Fechar">close</button>
     </div>
 
     <p class="configLabel">Tema</p>
     <div class="temaOpcoes">
-      <button class="btnTema" data-valor="auto" onclick="definirTema('auto')">🌓 Automático (segue o sistema)</button>
-      <button class="btnTema" data-valor="claro" onclick="definirTema('claro')">☀️ Claro</button>
-      <button class="btnTema" data-valor="escuro" onclick="definirTema('escuro')">🌙 Escuro</button>
+      <button class="btnTema" data-valor="auto" onclick="definirTema('auto')"><span class="material-symbols-outlined">brightness_auto</span>Automático (segue o sistema)</button>
+      <button class="btnTema" data-valor="claro" onclick="definirTema('claro')"><span class="material-symbols-outlined">light_mode</span>Claro</button>
+      <button class="btnTema" data-valor="escuro" onclick="definirTema('escuro')"><span class="material-symbols-outlined">dark_mode</span>Escuro</button>
     </div>
 
     <p class="configLabel configLabelEspacada">Dados</p>
     <div class="botoes">
       <button class="btnFerramenta btnBackup" onclick="exportarBackup()">
-        <span class="ferramentaIcone">💾</span>
+        <span class="ferramentaIcone material-symbols-outlined">backup</span>
         <span class="ferramentaLabel">Backup</span>
       </button>
       <button class="btnFerramenta btnRestaurar" onclick="importarBackup()">
-        <span class="ferramentaIcone">📂</span>
+        <span class="ferramentaIcone material-symbols-outlined">folder_open</span>
         <span class="ferramentaLabel">Restaurar</span>
       </button>
       <button class="btnFerramenta btnExcluirTudo" onclick="limparTudo()">
-        <span class="ferramentaIcone">🗑️</span>
+        <span class="ferramentaIcone material-symbols-outlined">delete_forever</span>
         <span class="ferramentaLabel">Limpar</span>
       </button>
     </div>
-
-    <p class="configLabel configLabelEspacada">Conta e sincronização</p>
-    <p class="contaInfo" id="contaInfo">Não conectado — seus dados ficam só neste dispositivo.</p>
-
-    <div id="loginCampos">
-      <input id="loginEmail" type="email" placeholder="E-mail" autocomplete="username" inputmode="email">
-      <input id="loginSenha" type="password" placeholder="Senha (mín. 6 caracteres)" autocomplete="current-password">
-      <button class="btnLoginPrimario" onclick="fazerLogin()">Entrar</button>
-      <button class="btnLoginSecundario" onclick="fazerCadastro()">Criar conta nova</button>
-      <p class="loginErro" id="loginErro"></p>
-    </div>
-
-    <button class="btnSair" id="btnSair" onclick="sair()" style="display:none;">🚪 Sair da conta</button>
   </div>
 </div>
 
@@ -87,10 +74,8 @@
   <!-- CABEÇALHO FIXO -->
   <header id="topo">
     <div class="acoesTopo">
-      <button class="btnOlho material-symbols-outlined" id="btnOlho" onclick="toggleValores()" aria-label="Mostrar ou esconder valores">
-  visibility
-</button> 
-      <button class="btnConfig" onclick="abrirConfig()" aria-label="Configurações">⚙️</button>
+      <button class="btnOlho material-symbols-outlined" id="btnOlho" onclick="toggleValores()" aria-label="Mostrar ou esconder valores">visibility</button>
+      <button class="btnConfig material-symbols-outlined" onclick="abrirConfig()" aria-label="Configurações">settings</button>
     </div>
 
     <div class="saldo-card saldoPositivo" id="saldoCard">
@@ -98,7 +83,7 @@
       <h1 id="saldoAtual">R$ 0,00</h1>
 
       <div class="seletorPeriodo">
-        <button class="setaMes" onclick="mesAnterior()" aria-label="Mês anterior">‹</button>
+        <button class="setaMes material-symbols-outlined" onclick="mesAnterior()" aria-label="Mês anterior">chevron_left</button>
 
         <div class="periodoTextos">
           <select id="mesSelecionado" onchange="trocarMes()">
@@ -124,7 +109,7 @@
           </select>
         </div>
 
-        <button class="setaMes" onclick="proximoMes()" aria-label="Próximo mês">›</button>
+        <button class="setaMes material-symbols-outlined" onclick="proximoMes()" aria-label="Próximo mês">chevron_right</button>
       </div>
     </div>
   </header>
@@ -134,9 +119,9 @@
     <!-- RECEITAS -->
     <section class="card receitas" data-secao="receitas">
       <div class="cardTitulo">
-        <h2>💰 Receitas</h2>
+        <h2><span class="material-symbols-outlined">payments</span>Receitas</h2>
         <span class="totalCard" id="resReceitas">R$ 0,00</span>
-        <button class="btnRecolher" id="btnRecolher_receitas" onclick="toggleSecao('receitas')" aria-label="Recolher receitas">🔽</button>
+        <button class="btnRecolher material-symbols-outlined" id="btnRecolher_receitas" onclick="toggleSecao('receitas')" aria-label="Recolher receitas">expand_more</button>
       </div>
 
       <div class="linha">
@@ -152,9 +137,9 @@
        <!-- PAGAMENTO -->
     <section class="card pagamento despesas" data-secao="pagamento">
       <div class="cardTitulo">
-        <h2>🏦 Pagamento</h2>
+        <h2><span class="material-symbols-outlined">account_balance</span>Pagamento</h2>
         <span class="totalCard" id="resPagamento">R$ 0,00</span>
-        <button class="btnRecolher" id="btnRecolher_pagamento" onclick="toggleSecao('pagamento')" aria-label="Recolher pagamento">🔽</button>
+        <button class="btnRecolher material-symbols-outlined" id="btnRecolher_pagamento" onclick="toggleSecao('pagamento')" aria-label="Recolher pagamento">expand_more</button>
       </div>
 
       <div class="linha">
@@ -169,9 +154,9 @@
      <!-- VALE -->
     <section class="card vale despesas" data-secao="vale">
       <div class="cardTitulo">
-        <h2>🎫 Vale</h2>
+        <h2><span class="material-symbols-outlined">confirmation_number</span>Vale</h2>
         <span class="totalCard" id="resVale">R$ 0,00</span>
-        <button class="btnRecolher" id="btnRecolher_vale" onclick="toggleSecao('vale')" aria-label="Recolher vale">🔽</button>
+        <button class="btnRecolher material-symbols-outlined" id="btnRecolher_vale" onclick="toggleSecao('vale')" aria-label="Recolher vale">expand_more</button>
       </div>
 
       <div class="linha">
@@ -187,8 +172,8 @@
     <!-- RESUMO -->
     <section class="card resumo" data-secao="resumo">
       <div class="cardTitulo">
-        <h2>📊 Resumo do mês</h2>
-        <button class="btnRecolher" id="btnRecolher_resumo" onclick="toggleSecao('resumo')" aria-label="Recolher resumo">🔽</button>
+        <h2><span class="material-symbols-outlined">bar_chart</span>Resumo do mês</h2>
+        <button class="btnRecolher material-symbols-outlined" id="btnRecolher_resumo" onclick="toggleSecao('resumo')" aria-label="Recolher resumo">expand_more</button>
       </div>
 
       <p><span><i class="dot dotReceita"></i>Receitas</span><span id="resumoReceitas">R$ 0,00</span></p>
@@ -202,25 +187,19 @@
 
     <!-- FECHAR MÊS -->
     <section class="card fecharMesCard">
-      <button class="btnFecharMes" onclick="fecharMes()">Fechar mês e avançar ➜</button>
+      <button class="btnFecharMes" onclick="fecharMes()">Fechar mês e avançar<span class="material-symbols-outlined">arrow_forward</span></button>
       <p class="dicaFechar">Confere se deu pra pagar tudo e já prepara o próximo mês.</p>
     </section>
 
     <!-- HISTÓRICO -->
     <section class="card historicoSection" data-secao="historico">
       <div class="cardTitulo">
-        <h2>🗂️ Histórico</h2>
-        <button class="btnRecolher" id="btnRecolher_historico" onclick="toggleSecao('historico')" aria-label="Recolher histórico">🔽</button>
+        <h2><span class="material-symbols-outlined">history</span>Histórico</h2>
+        <button class="btnRecolher material-symbols-outlined" id="btnRecolher_historico" onclick="toggleSecao('historico')" aria-label="Recolher histórico">expand_more</button>
       </div>
 
       <ul id="historico"></ul>
       <p class="listaVazia" id="vazioHistorico">Nenhum mês fechado ainda.</p>
-    </section>
-
-    <!-- FERRAMENTAS (reservado pra futura implementação) -->
-    <section class="card ferramentasSection">
-      <h2>Holerite</h2>
-      <p class="placeholderFerramentas">Em breve, novidades por aqui 🚧</p>
     </section>
 
   </main>
@@ -229,7 +208,6 @@
 
 <input type="file" id="arquivoBackup" accept="application/json" style="display:none">
 
-<script type="module" src="firebase-sync.js"></script>
 <script src="script.js"></script>
 <script>
   if ("serviceWorker" in navigator) {

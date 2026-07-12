@@ -1,8 +1,10 @@
 {
+  "id": "./index.html",
   "name": "Minhas Contas",
   "short_name": "Minhas Contas",
   "description": "Controle pessoal de receitas, vale e pagamento mensal.",
   "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#1b3a29",
   "theme_color": "#1b3a29",

@@ -19,132 +19,6 @@ if (!banco) {
 
 function salvarBanco() {
     localStorage.setItem("financeiro", JSON.stringify(banco));
-
-    if (usuarioAtual) {
-        window.CloudSync.salvarNaNuvem(usuarioAtual.uid, banco)
-            .catch(err => console.error("Falha ao sincronizar:", err));
-    }
-}
-
-// ===========================
-// CONTA / SINCRONIZAÇÃO
-// ===========================
-
-let usuarioAtual = null;
-
-window.addEventListener("cloudsync-pronto", function () {
-
-    CloudSync.onAuthStateChanged(async function (user) {
-
-        if (user) {
-
-            usuarioAtual = user;
-            atualizarUIConta();
-
-            try {
-                let dadosNuvem = await CloudSync.buscarDaNuvem(user.uid);
-
-                if (dadosNuvem) {
-                    banco = dadosNuvem;
-                } else {
-                    // Primeiro login: envia o que já existia neste aparelho
-                    await CloudSync.salvarNaNuvem(user.uid, banco);
-                }
-
-                localStorage.setItem("financeiro", JSON.stringify(banco));
-                atualizar();
-
-                CloudSync.ouvirMudancas(user.uid, function (dadosNovos) {
-                    banco = dadosNovos;
-                    localStorage.setItem("financeiro", JSON.stringify(banco));
-                    atualizar();
-                });
-
-            } catch (e) {
-                console.error("Erro ao sincronizar com a nuvem:", e);
-            }
-
-        } else {
-            usuarioAtual = null;
-            CloudSync.pararDeOuvir();
-            atualizarUIConta();
-        }
-    });
-});
-
-function atualizarUIConta() {
-    const info = document.getElementById("contaInfo");
-    const campos = document.getElementById("loginCampos");
-    const btnSair = document.getElementById("btnSair");
-    if (!info || !campos || !btnSair) return;
-
-    if (usuarioAtual) {
-        info.textContent = "Conectado como " + usuarioAtual.email;
-        campos.style.display = "none";
-        btnSair.style.display = "block";
-    } else {
-        info.textContent = "Não conectado — seus dados ficam só neste dispositivo.";
-        campos.style.display = "block";
-        btnSair.style.display = "none";
-    }
-}
-
-function traduzErroFirebase(codigo) {
-    const mapa = {
-        "auth/invalid-email": "E-mail inválido.",
-        "auth/missing-password": "Digite uma senha.",
-        "auth/user-not-found": "Conta não encontrada. Toque em \"Criar conta nova\".",
-        "auth/wrong-password": "Senha incorreta.",
-        "auth/invalid-credential": "E-mail ou senha incorretos.",
-        "auth/email-already-in-use": "Esse e-mail já tem uma conta. Toque em \"Entrar\".",
-        "auth/weak-password": "A senha precisa ter pelo menos 6 caracteres.",
-        "auth/network-request-failed": "Sem conexão com a internet."
-    };
-    return mapa[codigo] || "Não foi possível concluir. Tente novamente.";
-}
-
-function fazerLogin() {
-    let email = document.getElementById("loginEmail").value.trim();
-    let senha = document.getElementById("loginSenha").value;
-    let erro = document.getElementById("loginErro");
-
-    erro.innerText = "";
-
-    if (!email || !senha) {
-        erro.innerText = "Preencha e-mail e senha.";
-        return;
-    }
-
-    CloudSync.login(email, senha).catch(function (e) {
-        erro.innerText = traduzErroFirebase(e.code);
-    });
-}
-
-function fazerCadastro() {
-    let email = document.getElementById("loginEmail").value.trim();
-    let senha = document.getElementById("loginSenha").value;
-    let erro = document.getElementById("loginErro");
-
-    erro.innerText = "";
-
-    if (!email || !senha) {
-        erro.innerText = "Preencha e-mail e senha.";
-        return;
-    }
-
-    if (senha.length < 6) {
-        erro.innerText = "A senha precisa ter pelo menos 6 caracteres.";
-        return;
-    }
-
-    CloudSync.cadastrar(email, senha).catch(function (e) {
-        erro.innerText = traduzErroFirebase(e.code);
-    });
-}
-
-function sair() {
-    if (!confirm("Sair da conta neste aparelho?")) return;
-    CloudSync.logout();
 }
 
 // ===========================
@@ -465,7 +339,7 @@ function renderReceitas(lista) {
     <div class="itemValor">${valorExibicao(item.valor)}</div>
   </div>
   <div class="itemBotoes">
-    <button class="btnExcluir" title="Excluir" onclick="removerReceita(${item.id})">❌</button>
+    <button class="btnExcluir material-symbols-outlined" title="Excluir" onclick="removerReceita(${item.id})">delete</button>
   </div>
 </li>`;
     });
@@ -490,14 +364,14 @@ function renderVale(lista) {
     <div class="itemValor">${valorExibicao(item.valor)}</div>
   </div>
   <div class="itemBotoes">
-    <button class="${item.pago ? "btnPago" : "btnPagar"}"
+    <button class="${item.pago ? "btnPago" : "btnPagar"} material-symbols-outlined"
       title="${item.pago ? "Pago" : "Pagar"}"
-      onclick="toggleVale(${item.id})">${item.pago ? "✅" : "💸"}</button>
-    <button class="${item.fixa ? "btnFixa" : "btnNormal"}"
+      onclick="toggleVale(${item.id})">${item.pago ? "check_circle" : "schedule"}</button>
+    <button class="${item.fixa ? "btnFixa" : "btnNormal"} material-symbols-outlined${item.fixa ? " icone-preenchido" : ""}"
       title="${item.fixa ? "Conta fixa" : "Marcar como fixa"}"
-      onclick="toggleFixaVale(${item.id})">${item.fixa ? "📌" : "📍"}</button>
-    <button class="btnEditar" title="Editar" onclick="editarVale(${item.id})">✏️</button>
-    <button class="btnExcluir" title="Excluir" onclick="removerVale(${item.id})">❌</button>
+      onclick="toggleFixaVale(${item.id})">push_pin</button>
+    <button class="btnEditar material-symbols-outlined" title="Editar" onclick="editarVale(${item.id})">edit</button>
+    <button class="btnExcluir material-symbols-outlined" title="Excluir" onclick="removerVale(${item.id})">delete</button>
   </div>
 </li>`;
     });
@@ -522,14 +396,14 @@ function renderPagamento(lista) {
     <div class="itemValor">${valorExibicao(item.valor)}</div>
   </div>
   <div class="itemBotoes">
-    <button class="${item.pago ? "btnPago" : "btnPagar"}"
+    <button class="${item.pago ? "btnPago" : "btnPagar"} material-symbols-outlined"
       title="${item.pago ? "Pago" : "Pagar"}"
-      onclick="togglePagamento(${item.id})">${item.pago ? "✅" : "💸"}</button>
-    <button class="${item.fixa ? "btnFixa" : "btnNormal"}"
+      onclick="togglePagamento(${item.id})">${item.pago ? "check_circle" : "schedule"}</button>
+    <button class="${item.fixa ? "btnFixa" : "btnNormal"} material-symbols-outlined${item.fixa ? " icone-preenchido" : ""}"
       title="${item.fixa ? "Conta fixa" : "Marcar como fixa"}"
-      onclick="toggleFixaPagamento(${item.id})">${item.fixa ? "📌" : "📍"}</button>
-    <button class="btnEditar" title="Editar" onclick="editarPagamento(${item.id})">✏️</button>
-    <button class="btnExcluir" title="Excluir" onclick="removerPagamento(${item.id})">❌</button>
+      onclick="toggleFixaPagamento(${item.id})">push_pin</button>
+    <button class="btnEditar material-symbols-outlined" title="Editar" onclick="editarPagamento(${item.id})">edit</button>
+    <button class="btnExcluir material-symbols-outlined" title="Excluir" onclick="removerPagamento(${item.id})">delete</button>
   </div>
 </li>`;
     });
@@ -748,9 +622,9 @@ function renderHistorico() {
         html += `
 <li>
   <div class="historicoTopo">
-    <span class="historicoData">📅 ${NOMES_MES[Number(h.mes) - 1]}/${h.ano}</span>
+    <span class="historicoData"><span class="material-symbols-outlined">calendar_month</span>${NOMES_MES[Number(h.mes) - 1]}/${h.ano}</span>
     <span class="historicoResultado ${ok ? "ok" : "alerta"}">
-      ${ok ? "✅ Deu pra pagar" : "⚠️ Faltou dinheiro"}
+      <span class="material-symbols-outlined">${ok ? "check_circle" : "warning"}</span>${ok ? "Deu pra pagar" : "Faltou dinheiro"}
     </span>
   </div>
 
@@ -1014,10 +888,10 @@ function aplicarEstadoSecoes() {
 
         if (estados[sec]) {
             card.classList.add("recolhido");
-            if (btn) btn.textContent = "▶️";
+            if (btn) btn.textContent = "chevron_right";
         } else {
             card.classList.remove("recolhido");
-            if (btn) btn.textContent = "🔽";
+            if (btn) btn.textContent = "expand_more";
         }
     });
 }
